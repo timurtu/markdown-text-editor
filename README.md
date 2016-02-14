@@ -3,6 +3,8 @@
 
 **(Name is subject to change)**
 
+I just found out that [MdNote](http://md-note.com/) exists, so I have discontinued this project unless there are significant differences between the two ideas.
+
 Developers aren't the only people using markdown for writing documents. This application makes writing markdown accessible to everyone.
 
 Built on Electron.
