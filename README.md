@@ -1,4 +1,4 @@
-##A text editor for writing _markdown_.##
+##A text editor for writing _markdown_##
 
 **(Name is subject to change)**
 
