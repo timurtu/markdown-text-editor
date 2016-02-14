@@ -20,5 +20,8 @@ Download the application for your respective operating system.
 ##Contribute##
 
 `
+git clone https://github.com/timurtu/markdown-text-editor.git
+cd markdown-text-editor
 npm install jspm --save-dev
+npm install electron-prebuilt -g
 `
