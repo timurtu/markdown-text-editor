@@ -2,6 +2,6 @@
 
 **(Name is subject to change)**
 
-Built on Electron.
+Developers aren't the only people using markdown for writing documents. This application makes writing markdown accessible to everyone.
 
-More people than developer's use markdown for writing documents. This software makes writing markdown accessible to everyone.
+Built on Electron.
