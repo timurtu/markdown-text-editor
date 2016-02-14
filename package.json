@@ -1,0 +1,34 @@
+{
+  "name": "markdown-text-editor",
+  "version": "1.0.0",
+  "description": "Write markdown and see your changes live",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timurtu/markdown-text-editor.git"
+  },
+  "keywords": [
+    "markdown",
+    "text",
+    "desktop"
+  ],
+  "author": "Timur Uzel <timurt.uzel@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timurtu/markdown-text-editor/issues"
+  },
+  "homepage": "https://github.com/timurtu/markdown-text-editor#readme",
+  "jspm": {
+    "dependencies": {},
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
