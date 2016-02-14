@@ -32,4 +32,6 @@ git clone https://github.com/timurtu/markdown-text-editor.git
 cd markdown-text-editor
 
 npm install electron-prebuilt -g
+
+npm start
 ```
