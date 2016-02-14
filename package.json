@@ -4,7 +4,9 @@
   "description": "Write markdown and see your changes live",
   "main": "main.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "jspm": "^0.16.27"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
