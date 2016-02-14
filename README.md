@@ -1,4 +1,5 @@
 #A text editor for markdown#
+[![Build Status](https://travis-ci.org/timurtu/markdown-text-editor.svg?branch=master)](https://travis-ci.org/timurtu/markdown-text-editor)
 
 **(Name is subject to change)**
 
