@@ -29,9 +29,9 @@ Download the application for your respective operating system.
 ```
 git clone https://github.com/timurtu/markdown-text-editor.git
 
-cd markdown-text-editor
-
 npm install electron-prebuilt -g
+
+cd markdown-text-editor
 
 npm start
 ```
