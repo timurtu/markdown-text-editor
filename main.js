@@ -9,7 +9,7 @@ const ipcMain = require('electron').ipcMain;
 const autoSavePath = './res/autosave.md';
 
 ipcMain.on('asynchronous-message', function(event, message) {
-  console.log(message); // prints "ping"
+  console.log(message);
   fs.readFile(autoSavePath, function(err, data) {
     if (err) throw err;
     event.sender.send('asynchronous-reply', data);
