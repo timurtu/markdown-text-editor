@@ -3,14 +3,35 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const fs = require('fs');
+let mainWindow = null;
 
-let mainWindow;
+
+function readFile(file) {
+}
+
+function writeFile(file, data) {
+  fs.appendFile(file, data, (fileError) => {
+
+    if (fileError) throw fileError;
+
+    console.log(`The ${data} was appended to ${file}!`);
+
+  });
+
+}
 
 function createWindow() {
+
+  //readFile('./res/autosave.md');
   mainWindow = new BrowserWindow({width: 600, height: 600});
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
+  mainWindow.webContents.openDevTools();
+
   mainWindow.on('closed', () => {
+    // Append to an autosave file that gets loaded on app start
+    writeFile('res/autosave.md', 'this is the text');
     mainWindow = null;
   });
 }
@@ -18,13 +39,13 @@ function createWindow() {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-  if(process.platform !== 'darwin') {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 app.on('activate', () => {
-  if(mainWindow === null) {
+  if (mainWindow === null) {
     createWindow();
   }
 });
