@@ -11,7 +11,7 @@ You must have [pandoc](https://github.com/jgm/pandoc) installed.
 
 To check if you have pandoc installed, open up a terminal and type
 
-'pandoc -v'
+`pandoc -v`
 
 Download the application for your respective operating system.
 
