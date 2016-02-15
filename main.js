@@ -5,9 +5,8 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const fs = require('fs');
 let mainWindow = null;
-const ipcMain = require('electron').ipcMain;
+const ipcMain = electron.ipcMain;
 const autoSavePath = './res/autosave.md';
-
 
 ipcMain.on('asynchronous-message', function(event, message) {
   console.log(message);
@@ -16,20 +15,6 @@ ipcMain.on('asynchronous-message', function(event, message) {
     event.sender.send('asynchronous-reply', data);
   });
 });
-
-function readFile(file) {
-  fs.readFile(file, function(err, data) {
-    if (err) throw err;
-    return data;
-  });
-}
-
-function writeFile(file, data) {
-  fs.writeFile(file, data, (fileError) => {
-    if (fileError) throw fileError;
-    console.log(`Markdown was written to ${file}!`);
-  });
-}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
