@@ -3,13 +3,15 @@ body {
   background-color: rgba(241, 245, 24, 0.25);
   margin: 0;
 }
-.wrapper {
+textarea {
+  background-color: rgba(241, 245, 24, -0.25);
+  font-family: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  border: 0;
   width: 90%;
   display: table;
   margin: 0 auto;
   padding: 15px;
-}
-.title {
-  display: table;
-  margin: 2em auto;
+  outline: none;
 }
