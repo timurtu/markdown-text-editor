@@ -8,6 +8,7 @@ let mainWindow = null;
 const ipcMain = require('electron').ipcMain;
 const autoSavePath = './res/autosave.md';
 
+
 ipcMain.on('asynchronous-message', function(event, message) {
   console.log(message);
   fs.readFile(autoSavePath, function(err, data) {
