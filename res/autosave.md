@@ -34,4 +34,4 @@ npm install electron-prebuilt -g
 cd markdown-text-editor
 
 npm start
-```this is the textthis is the text
+```this is the textthis is the textthis is the textthis is the textthis is the textthis is the text

@@ -25,13 +25,13 @@ function createWindow() {
 
   //readFile('./res/autosave.md');
   mainWindow = new BrowserWindow({width: 600, height: 600});
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/src/index.html');
 
   mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
-    // Append to an autosave file that gets loaded on app start
-    writeFile('res/autosave.md', 'this is the text');
+
+
     mainWindow = null;
   });
 }
