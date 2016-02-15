@@ -9,3 +9,7 @@ body {
   margin: 0 auto;
   padding: 15px;
 }
+.title {
+  display: table;
+  margin: 2em auto;
+}
