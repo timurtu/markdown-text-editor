@@ -6,7 +6,7 @@ const remote = require('electron').remote;
 const ipcRenderer = require('electron').ipcRenderer;
 
 ipcRenderer.on('asynchronous-reply', function (event, reply) {
-  editor.textContent = reply;
+  editor.innerHTML = reply;
 });
 ipcRenderer.send('asynchronous-message', 'ping');
 
