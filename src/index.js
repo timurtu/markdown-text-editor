@@ -5,9 +5,9 @@ const remote = require('electron').remote;
 // const remote = require('electron').remote;
 const BrowserWindow = remote.BrowserWindow;
 const fs = require('fs');
-const ipcRenderer = require('electron').ipcRenderer;
+const ipcRenderer = remote.ipcRenderer;
 
-ipcRenderer.on('asynchronous-reply', (event, reply) => {
-  editor.innerHTML = reply;
-});
-ipcRenderer.send('asynchronous-message', 'ping');
+//ipcRenderer.on('asynchronous-reply', (event, reply) => {
+//  editor.innerHTML = reply;
+//});
+//ipcRenderer.send('asynchronous-message', 'ping');

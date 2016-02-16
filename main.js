@@ -8,13 +8,13 @@ let mainWindow = null;
 const ipcMain = electron.ipcMain;
 const autoSavePath = './res/autosave.md';
 
-ipcMain.on('asynchronous-message', function(event, message) {
-  console.log(message);
-  fs.readFile(autoSavePath, function(err, data) {
-    if (err) throw err;
-    event.sender.send('asynchronous-reply', data);
-  });
-});
+//ipcMain.on('asynchronous-message', function(event, message) {
+//  console.log(message);
+//  fs.readFile(autoSavePath, function(err, data) {
+//    if (err) throw err;
+//    event.sender.send('asynchronous-reply', data);
+//  });
+//});
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -27,12 +27,15 @@ function createWindow() {
     mainWindow = null;
   });
 }
+
 app.on('ready', createWindow);
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
+
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
