@@ -1,9 +1,9 @@
 body {
-  background-color: rgba(241, 245, 24, 0.25);
+  background-color: #FDFEC7;
   margin: 0;
 }
 textarea {
-  background-color: rgba(241, 245, 24, -0.25);
+  background-color: #FCFDC6;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.6;
