@@ -1,4 +1,5 @@
 #A text editor for markdown
+####(Name is subject to change)
 [![Build Status](https://travis-ci.org/timurtu/markdown-text-editor.svg?branch=master)](https://travis-ci.org/timurtu/markdown-text-editor)
 
 Developers aren't the only people using markdown for writing documents. This application makes writing markdown accessible to everyone.
