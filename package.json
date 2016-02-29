@@ -6,14 +6,10 @@
   "dependencies": {},
   "devDependencies": {
     "electron": "^0.4.1",
-    "electron-prebuilt": "^0.36.7",
-    "eslint": "^2.1.0",
-    "mocha": "^2.4.5"
+    "electron-prebuilt": "^0.36.7"
   },
   "scripts": {
-    "start": "electron .",
-    "lint": "eslint **.js",
-    "test": "mocha test/"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
