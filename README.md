@@ -19,11 +19,11 @@ Download the application for your respective operating system.
 ## Contribute
 
 ```
-git clone https://github.com/timurtu/markdown-text-editor.git
+git clone https://github.com/timurtu/markitup.git
 
 npm install electron-prebuilt -g
 
-cd markdown-text-editor
+cd markitup
 
 npm start
 ```
