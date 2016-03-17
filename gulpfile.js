@@ -9,7 +9,7 @@ const sass = require('gulp-sass');
 gulp.task('build', ['main', 'js', 'sass']);
 
 /**
- * Watch for changes and rebuild.
+ * Watch for changes and rebuild only those changes.
  */
 gulp.task('watch', ['build'], function () {
   gulp.watch('src/**/*', ['build']);
