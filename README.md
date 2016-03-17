@@ -20,5 +20,6 @@ Download the application for your respective operating system.
 
 - Clone this repo
 - `cd` into it
-- `npm install`
+- `npm install` to install required dependencies
+- `gulp` to transpile javascript and compile sass
 - `npm start`
