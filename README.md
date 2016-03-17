@@ -18,12 +18,7 @@ Download the application for your respective operating system.
 
 ## Contribute
 
-```
-git clone https://github.com/timurtu/markitup.git
-
-npm install electron-prebuilt -g
-
-cd markitup
-
-npm start
-```
+- Clone this repo
+- `cd` into it
+- `npm install`
+- `npm start`
