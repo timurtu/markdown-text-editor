@@ -22,4 +22,3 @@ Download the application for your respective operating system.
 - `cd` into it
 - `npm install`
 - `npm start`
-- 
