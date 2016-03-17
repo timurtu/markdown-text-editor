@@ -6,13 +6,27 @@ const changed = require('gulp-changed');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
 
+const paths = {
+  src: {
+    all: 'src/**/*',
+    main: 'src/main.js',
+    js: 'src/js/**/*.js',
+    sass: 'src/sass/**/*.scss'
+  },
+  dest: {
+    main: './',
+    js: './dist/js',
+    sass: './dist/css'
+  }
+};
+
 gulp.task('build', ['main', 'js', 'sass']);
 
 /**
- * Watch for changes and rebuild.
+ * Watch for changes and rebuild only those changes.
  */
 gulp.task('watch', ['build'], function () {
-  gulp.watch('src/**/*', ['build']);
+  gulp.watch(paths.src.all, ['build']);
 });
 
 /**
@@ -20,38 +34,26 @@ gulp.task('watch', ['build'], function () {
  * it is required in the root of an electron app.
  */
 gulp.task('main', () => {
-
-  const DEST = './';
-
-  return gulp.src('src/main.js')
-    .pipe(changed(DEST))
+  return gulp.src(paths.src.main)
+    .pipe(changed(paths.dest.main))
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(gulp.dest(DEST));
-
+    .pipe(gulp.dest(paths.dest.main));
 });
 
 gulp.task('js', () => {
-
-  const DEST = './dist/js';
-
-  return gulp.src('src/js/**/*.js')
-    .pipe(changed(DEST))
+  return gulp.src(paths.src.js)
+    .pipe(changed(paths.dest.js))
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(gulp.dest(DEST));
-
+    .pipe(gulp.dest(paths.dest.js));
 });
 
 gulp.task('sass', () => {
-
-  const DEST = './dist/css';
-
-  return gulp.src('src/sass/**/*.scss')
-    .pipe(changed(DEST))
+  return gulp.src(paths.src.sass)
+    .pipe(changed(paths.dest.sass))
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(DEST));
-
+    .pipe(gulp.dest(paths.dest.sass));
 });
