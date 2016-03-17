@@ -1,17 +1,24 @@
 /**
  * Created by timur on 3/16/2016.
  */
-var gulp = require('gulp');
-var changed = require('gulp-changed');
-var babel = require('gulp-babel');
-var sass = require('gulp-sass');
+const gulp = require('gulp');
+const changed = require('gulp-changed');
+const babel = require('gulp-babel');
+const sass = require('gulp-sass');
 
-gulp.task('default', ['main', 'js', 'sass']);
+gulp.task('build', ['main', 'js', 'sass']);
+
+/**
+ * Watch for changes and rebuild.
+ */
+gulp.task('watch', ['build'], function () {
+  gulp.watch('src/**/*', ['build']);
+});
 
 /**
  * Transpile the main javascript file separately because
  * it is required in the root of an electron app.
- * */
+ */
 gulp.task('main', () => {
 
   const DEST = './';

@@ -21,5 +21,6 @@ Download the application for your respective operating system.
 - Clone this repo
 - `cd` into it
 - `npm install` to install required dependencies
-- `gulp` to transpile javascript and compile sass
-- `npm start`
+- `gulp build` to transpile javascript and compile sass
+- `npm start` to start the app
+- `gulp watch` to rebuild changed files on file change
