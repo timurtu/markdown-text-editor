@@ -1,41 +1,44 @@
+$font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji",
+"Segoe UI Emoji", "Segoe UI Symbol";
+
 body {
-    background-color: #FDFEC7;
+  background-color: #FDFEC7;
 }
 
 #toolbar {
-    display: table;
-    margin: .125em auto;
-}
+  display: table;
+  margin: .125em auto;
 
-#toolbar button {
+  button {
     margin: .125em;
     width: 26px;
     height: 26px;
     padding: 5px;
-}
+  }
 
-#make-bold {
+  #make-bold {
     font-weight: 700;
-}
+  }
 
-#emphasize {
+  #emphasize {
     font-style: italic;
-}
+  }
 
-#under-line {
+  #under-line {
     text-decoration: underline;
+  }
 }
 
 #markdown-text {
-    font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 16px;
-    line-height: 1.6;
-    padding: .5em 1.5em;
-    outline: none;
-}
+  font-family: $font-family;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: .5em 1.5em;
+  outline: none;
 
-textarea::selection {
+  &::selection {
     color: #3C2923;
     background: rgba(139, 195, 74, 0.25);
+  }
+
 }
