@@ -1,4 +1,8 @@
-# A Markdown Editor for Everyone
+# Markup - The Markdown Editor for Everyone
+
+ ![alt text][screenshot]
+
+ [screenshot]: https://github.com/timurtu/markup/res/screenshot.jpg "Markup Screenshot"
 
 ## Install
 
