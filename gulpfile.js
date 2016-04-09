@@ -35,7 +35,7 @@ gulp.task('watch', ['build'], function () {
  */
 gulp.task('main', () => {
   return gulp.src(paths.src.main)
-    .pipe(changed(paths.dest.main))
+    // .pipe(changed(paths.dest.main))
     .pipe(babel({
       presets: ['es2015']
     }))
@@ -44,7 +44,7 @@ gulp.task('main', () => {
 
 gulp.task('js', () => {
   return gulp.src(paths.src.js)
-    .pipe(changed(paths.dest.js))
+    // .pipe(changed(paths.dest.js))
     .pipe(babel({
       presets: ['es2015']
     }))
@@ -53,7 +53,7 @@ gulp.task('js', () => {
 
 gulp.task('sass', () => {
   return gulp.src(paths.src.sass)
-    .pipe(changed(paths.dest.sass))
+    // .pipe(changed(paths.dest.sass))
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(paths.dest.sass));
 });

@@ -1,8 +1,9 @@
 $font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji",
 "Segoe UI Emoji", "Segoe UI Symbol";
+$bg: #FFF088;
 
 body {
-  background-color: #FDFEC7;
+  background-color: $bg;
 }
 
 #toolbar {
@@ -38,7 +39,12 @@ body {
 
   &::selection {
     color: #3C2923;
-    background: rgba(139, 195, 74, 0.25);
+    background: rgba(139, 195, 74, 0.5);
   }
 
+}
+
+#bottom-bar {
+  position: fixed;
+  bottom: 0;
 }
