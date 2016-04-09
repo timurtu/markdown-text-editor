@@ -1,11 +1,6 @@
 # A text editor for Markdown
-#### (Name is subject to change)
-
-
 
 This application makes writing markdown accessible to everyone.
-
-Built on Electron.
 
 ## Install
 
