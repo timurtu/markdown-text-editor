@@ -24,11 +24,11 @@ function createWindow() {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // mainWindow.webContents.openDevTools();
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
 }
+
+app.on('closed', () => {
+  mainWindow = null;
+});
 
 app.on('ready', createWindow);
 

@@ -1,10 +1,14 @@
 {
-  "name": "markdown-text-editor",
+  "name": "markup",
   "version": "1.0.0",
   "description": "Write markdown with a WYSIWYG and get the source.",
   "main": "main.js",
+  "scripts": {
+    "start": "node_modules/electron-prebuilt/cli.js ."
+  },
   "dependencies": {
-    "electron": "^0.4.1"
+    "electron": "^0.4.1",
+    "electron-prebuilt": "^0.37.5"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.6.0",
@@ -12,9 +16,6 @@
     "gulp-babel": "^6.1.2",
     "gulp-changed": "^1.3.0",
     "gulp-sass": "^2.2.0"
-  },
-  "scripts": {
-    "start": "electron ."
   },
   "repository": {
     "type": "git",
