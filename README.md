@@ -12,9 +12,10 @@ Download the application for your respective operating system.
 
 ## Contribute
 
-- Clone this repo
+- Fork this repo
 - `cd` into it
 - `npm install` to install required dependencies
 - `gulp build` to transpile javascript and compile sass
 - `npm start` to start the app
 - `gulp watch` to rebuild changed files on file change
+- Send a pull request
