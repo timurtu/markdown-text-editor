@@ -1,4 +1,4 @@
-# Markup - The Markdown Editor for Everyone
+# The Markdown Editor for Everyone
 
  ![alt text][screenshot]
 
