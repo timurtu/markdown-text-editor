@@ -14,8 +14,5 @@ Download the application for your respective operating system.
 
 - Fork this repo
 - `cd` into it
-- `npm install` to install required dependencies
-- `gulp build` to transpile javascript and compile sass
-- `npm start` to start the app
-- `gulp watch` to rebuild changed files on file change
+- `npm install && npm start`
 - Send a pull request
