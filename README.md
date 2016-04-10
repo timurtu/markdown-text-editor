@@ -1,29 +1,24 @@
-#A text editor for markdown
+# The Markdown Editor for Everyone
 
+ ![alt text][screenshot]
 
-Built on Electron.
+ [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot.png "Markup Screenshot"
 
-##Install
+## Install
 
 ### You must have [Pandoc](http://pandoc.org/ "Pandoc's website") installed.
 
 Download the application for your respective operating system.
 
-###OS X
+### OS X
 
-###Windows
+### Windows
 
-###Linux
+### Linux
 
+## Contribute
 
-##Contribute
-
-```
-git clone https://github.com/timurtu/markdown-text-editor.git
-
-npm install electron-prebuilt -g
-
-cd markdown-text-editor
-
-npm start
-```
+- Fork this repo
+- `cd` into it
+- `npm install && npm start`
+- Send a pull request
