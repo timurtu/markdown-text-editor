@@ -5,4 +5,8 @@ const paths = {
     autosaveHTML: './res/autosave.html'
 };
 
-editor.innerHTML = fs.readFileSync(paths.autosaveHTML);
+fs.readFile(paths.autosaveHTML, (err, data) => {
+    'use strict';
+    if (err) throw err;
+    editor.innerHTML = data;
+});
