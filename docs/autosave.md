@@ -33,12 +33,13 @@ occupy, pug celiac tacos +1.
 
 [I'm an inline-style link](https://www.google.com)
 
-[I'm an inline-style link with
+[I'm an *inline*-style link with
 title](https://www.google.com "Google's Homepage")
 
 [I'm a reference-style link](https://www.mozilla.org)
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+[I'm a relative reference to a **repository**
+file](../blob/master/LICENSE)
 
 [You can use numbers for reference-style link
 definitions](http://slashdot.org)
@@ -69,10 +70,18 @@ Inline `code` has `back-ticks around` it.
 
 <div class="sourceCode">
 
+<div class="sourceCode">
+
+<div class="sourceCode">
+
 ``` {.sourceCode .javascript}
 var s = "JavaScript syntax highlighting";
 alert(s);
 ```
+
+</div>
+
+</div>
 
 </div>
 
@@ -88,10 +97,18 @@ alert(s);
 
 <div class="sourceCode">
 
+<div class="sourceCode">
+
+<div class="sourceCode">
+
 ``` {.sourceCode .python}
 s = "Python syntax highlighting"
 print s
 ```
+
+</div>
+
+</div>
 
 </div>
 
