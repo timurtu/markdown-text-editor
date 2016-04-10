@@ -9,6 +9,7 @@ let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
 let isHtml = true;
+let elements;
 
 init();
 
@@ -18,17 +19,25 @@ init();
  */
 function init() {
 
+
     if (fs.existsSync(paths.autosaveHTML)) {
         fs.readFile(paths.autosaveHTML, (err, data) => {
 
             if (err) throw err;
             editor.innerHTML = data;
-
+            getContents();
         });
     } else {
         editor.innerHTML = 'Markdown goes here.';
     }
 
+}
+
+function getContents() {
+    if(editor.hasChildNodes()){
+        elements = editor.childNodes;
+        console.log(elements);
+    }
 }
 
 function storeHtml() {
@@ -73,7 +82,7 @@ document.getElementById('save').addEventListener('click', () => {
     pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
         if (err) throw err;
         fs.writeFile(paths.autosaveMD, result, (err) => {
-            if(err) throw err;
+            if (err) throw err;
             notice('Markdown File Saved.');
         });
     });

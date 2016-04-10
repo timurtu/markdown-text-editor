@@ -14,8 +14,15 @@ body {
   Toolbar
 *************/
 #toolbar {
-  display: table;
-  margin: .5em auto;
+  display: block;
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 12px;
+  background: rgba(74, 195, 184, 0.62);
+  box-shadow: 2px 2px 1px rgba(0,0,0, 0.125);
 
   #make-bold {
     font-weight: 700;
@@ -38,6 +45,7 @@ body {
   Main
 *************/
 #markdown-text {
+  margin-top: 60px;
   font-family: $font-family;
   font-size: 16px;
   line-height: 1.6;
