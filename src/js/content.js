@@ -2,8 +2,7 @@ import fs from 'fs';
 import pandoc from 'pdc';
 const editor = document.getElementById('markdown-text');
 const paths = {
-    autosaveMD: './docs/autosave.md',
-    autosaveHTML: './docs/autosave.html'
+    autosaveMD: './docs/autosave.md'
 };
 let currentFontSize = 16;
 const MAX_FONT = 40;
@@ -73,6 +72,7 @@ document.getElementById('save').addEventListener('click', () => {
 
         fs.writeFile(paths.autosaveMD, result, (err) => {
             if (err) throw err;
+            console.log(`File at ${paths.autosaveMD} was written successfully.`);
         });
     });
 

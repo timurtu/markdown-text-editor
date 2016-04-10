@@ -33,11 +33,17 @@ uses two tildes. ~~Scratch this.~~
 
 <div class="sourceCode">
 
+<div class="sourceCode">
+
 ``` {.sourceCode .javascript}
 function doThing() {
 ```
 
 </div>
+
+</div>
+
+<div class="sourceCode">
 
 <div class="sourceCode">
 
@@ -45,6 +51,8 @@ function doThing() {
     console.log('Hello, Markup!');
 }
 ```
+
+</div>
 
 </div>
 
