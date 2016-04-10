@@ -11,6 +11,14 @@ body {
 }
 
 /*************
+  Toaster
+*************/
+#toaster {
+  float: right;
+  margin-right: 1em;
+}
+
+/*************
   Toolbar
 *************/
 #toolbar {
@@ -22,7 +30,7 @@ body {
   top: 0;
   padding: 12px;
   background: rgba(74, 195, 184, 0.62);
-  box-shadow: 2px 2px 1px rgba(0,0,0, 0.125);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.125);
 
   #make-bold {
     font-weight: 700;
