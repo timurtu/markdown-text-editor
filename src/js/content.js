@@ -58,3 +58,23 @@ document.getElementById('font-down').addEventListener('click', () => {
 function changeFontSize(pixels) {
     editor.style.fontSize = `${pixels}px`;
 }
+
+/**
+ *  Dangerously take the html from our editable DOM node
+ *  and convert it to markdown. Then save it to our autosave
+ *  file.
+ */
+document.getElementById('save').addEventListener('click', () => {
+
+    const data = editor.innerHTML;
+
+    pandoc(data, 'html', 'markdown', function (err, result) {
+        if (err) throw err;
+
+        fs.writeFile(paths.autosaveMD, result, (err) => {
+            if (err) throw err;
+        });
+    });
+
+
+});
