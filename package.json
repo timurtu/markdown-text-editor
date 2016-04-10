@@ -37,6 +37,7 @@
     "url": "https://github.com/timurtu/markdown-text-editor/issues"
   },
   "dependencies": {
+    "github-markdown-css": "^2.2.1",
     "pdc": "^0.2.2"
   }
 }

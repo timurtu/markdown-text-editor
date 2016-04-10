@@ -29,11 +29,26 @@ uses two tildes. ~~Scratch this.~~
 
 <div class="sourceCode">
 
+<div class="sourceCode">
+
+<div class="sourceCode">
+
 ``` {.sourceCode .javascript}
 function doThing() {
+```
+
+</div>
+
+<div class="sourceCode">
+
+``` {.sourceCode .javascript}
     console.log('Hello, Markup!');
 }
 ```
+
+</div>
+
+</div>
 
 </div>
 

@@ -42,7 +42,18 @@ body {
   line-height: 1.6;
   padding: 0 .75em;
   outline: none;
-  //white-space: pre-wrap;
+
+  h1, h2 {
+    border-bottom: 1px solid #2F2D2D;
+  }
+
+  &:hover {
+    cursor: text;
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
 
   &::selection {
     color: #3C2923;
@@ -52,8 +63,14 @@ body {
   .sourceCode {
     background-color: #565656;
     color: #EBFDFF;
-    padding: .125em 0 .0125em .5em;
     border-radius: 5px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 2px;
+  }
+
+  hr {
+    background-color: #000;
   }
 
 }
