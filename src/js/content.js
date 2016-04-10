@@ -1,11 +1,29 @@
 import fs from 'fs';
 import pandoc from 'pdc';
 import Remarkable from 'remarkable';
-const md = new Remarkable();
+import hljs from 'highlight.js';
+
+// Actual default values
+const md = new Remarkable({
+    highlight: (str, lang) => {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return hljs.highlight(lang, str).value;
+            } catch (err) {}
+        }
+
+        try {
+            return hljs.highlightAuto(str).value;
+        } catch (err) {
+            console.log(err);
+        }
+
+        return ''; // use external default escaping
+    }
+});
+
 const editor = document.getElementById('markdown-text');
-const paths = {
-    autosaveMD: './docs/autosave.md'
-};
+const autosavePath = './docs/autosave.md';
 let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
@@ -38,8 +56,8 @@ init();
  */
 function init() {
 
-    if (fs.existsSync(paths.autosaveMD)) {
-        fs.readFile(paths.autosaveMD, (err, data) => {
+    if (fs.existsSync(autosavePath)) {
+        fs.readFile(autosavePath, (err, data) => {
             if (err) throw err;
             editor.innerHTML = md.render(data.toString());
         });
@@ -84,14 +102,14 @@ function changeFontSize(pixels) {
 
 /**
  *  Dangerously take the html from our editable DOM node
- *  and convert it to markdown. Then save it to our autosave
+ *  and convert it to markdown. Then save it to our autosavePath
  *  file.
  */
 saveButton.addEventListener('click', () => {
 
     pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
         if (err) throw err;
-        fs.writeFile(paths.autosaveMD, result, (err) => {
+        fs.writeFile(autosavePath, result, (err) => {
             if (err) throw err;
             toast('Files Saved.');
         });
@@ -106,7 +124,7 @@ document.getElementById('switch').addEventListener('click', () => {
          * Read from the autosaved markdown file and dangerously
          * set it to the DOM.
          */
-        fs.readFile(paths.autosaveMD, (err, data) => {
+        fs.readFile(autosavePath, (err, data) => {
             if (err) throw err;
             editor.innerHTML = `<pre>${data.toString()}</pre>`;
             saveButton.style.display = 'none';

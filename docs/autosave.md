@@ -63,27 +63,19 @@ text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon4
 Inline `code` has `back-ticks around` it.
 
 ### JavaScript
-```javascript
-var s = 'JavaScript syntax highlighting';
-alert(s);
-````
 
+    var s = 'JavaScript syntax highlighting';
+    alert(s);
 
 ### Python
 
-```python
-s = "Python syntax highlighting"
-print s
-```
-
+    s = "Python syntax highlighting"
+    print s
 
 ### No language specified.
 
-```
-No language indicated, so no syntax highlighting.
-But let's throw in a <b>tag</b>.
-```
-
+    No language indicated, so no syntax highlighting.
+    But let's throw in a <b>tag</b>.
 
 Colons can be used to align columns.
 
