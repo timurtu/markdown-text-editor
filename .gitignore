@@ -7,5 +7,4 @@ dist/
 bundle/
 npm-debug.log
 .DS_Store
-main.js
 
