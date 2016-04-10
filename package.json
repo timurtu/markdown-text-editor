@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "npm-run-all --sequential build --parallel electron watch",
+    "perm": "chmod -Rf 744 ./",
     "clean": "rimraf node_modules dist main.js",
     "electron": "electron main.js",
     "watch": "gulp watch",
@@ -34,5 +35,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/timurtu/markdown-text-editor/issues"
+  },
+  "dependencies": {
+    "pdc": "^0.2.2"
   }
 }

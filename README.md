@@ -1,22 +1,27 @@
-# The Markdown Editor for Everyone
+#A text editor for markdown
 
- ![alt text][screenshot]
 
- [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot.jpg "Markup Screenshot"
+Built on Electron.
 
-## Install
+##Install
 
 Download the application for your respective operating system.
 
-### OS X
+###OS X
 
-### Windows
+###Windows
 
-### Linux
+###Linux
 
-## Contribute
 
-- Fork this repo
-- `cd` into it
-- `npm install && npm start`
-- Send a pull request
+##Contribute
+
+```
+git clone https://github.com/timurtu/markdown-text-editor.git
+
+npm install electron-prebuilt -g
+
+cd markdown-text-editor
+
+npm start
+```
