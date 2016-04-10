@@ -36,7 +36,6 @@ init();
  */
 function init() {
 
-
     if (fs.existsSync(paths.autosaveMD)) {
         fs.readFile(paths.autosaveMD, (err, data) => {
             if (err) throw err;
@@ -112,7 +111,6 @@ document.getElementById('switch').addEventListener('click', () => {
         fs.readFile(paths.autosaveMD, (err, data) => {
             if (err) throw err;
             editor.innerHTML = `<pre>${data.toString()}</pre>`;
-            console.log(data.toString());
             saveButton.style.display = 'none';
 
         });
