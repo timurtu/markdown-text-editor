@@ -2,7 +2,7 @@
 
  ![alt text][screenshot]
 
- [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot.png "Markup Screenshot"
+ [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot3.png "Markup Screenshot"
 
 ## Install
 
