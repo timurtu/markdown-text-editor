@@ -72,8 +72,20 @@ document.getElementById('save').addEventListener('click', () => {
 
         fs.writeFile(paths.autosaveMD, result, (err) => {
             if (err) throw err;
+
+            notice('File Saved. You can safely Exit.');
         });
     });
 
-
 });
+
+
+function notice(message) {
+    const notice = document.createElement('div');
+    notice.textContent = message;
+    notice.style.margin = 0;
+    editor.insertBefore(notice, editor.firstChild);
+    setTimeout(() => {
+        notice.remove();
+    }, 1000);
+}
