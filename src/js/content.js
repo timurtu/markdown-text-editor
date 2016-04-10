@@ -2,11 +2,13 @@ import fs from 'fs';
 import pandoc from 'pdc';
 const editor = document.getElementById('markdown-text');
 const paths = {
-    autosaveMD: './docs/autosave.md'
+    autosaveMD: './docs/autosave.md',
+    autosaveHTML: './docs/autosave.html'
 };
 let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
+let isHtml = true;
 
 init();
 
@@ -16,22 +18,21 @@ init();
  */
 function init() {
 
-    fs.readFile(paths.autosaveMD, (err, data) => {
+    if (fs.existsSync(paths.autosaveHTML)) {
+        fs.readFile(paths.autosaveHTML, (err, data) => {
 
-        if (err) throw err;
-
-        /**
-         * Convert an autosaved markdown file to HTML then
-         * dangerously set it to the DOM.
-         */
-        pandoc(data, 'markdown', 'html', function (err, result) {
             if (err) throw err;
+            editor.innerHTML = data;
 
-            editor.innerHTML = result;
         });
+    } else {
+        editor.innerHTML = 'Markdown goes here.';
+    }
 
-    });
+}
 
+function storeHtml() {
+    fs.writeFileSync(paths.autosaveHTML, editor.innerHTML);
 }
 
 /**
@@ -65,18 +66,39 @@ function changeFontSize(pixels) {
  */
 document.getElementById('save').addEventListener('click', () => {
 
-    const data = editor.innerHTML;
-
-    pandoc(data, 'html', 'markdown', function (err, result) {
+    fs.writeFile(paths.autosaveHTML, editor.innerHTML, (err) => {
         if (err) throw err;
-
+        notice('HTML File Saved.');
+    });
+    pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+        if (err) throw err;
         fs.writeFile(paths.autosaveMD, result, (err) => {
-            if (err) throw err;
-
-            notice('File Saved. You can safely Exit.');
+            if(err) throw err;
+            notice('Markdown File Saved.');
         });
     });
 
+});
+
+document.getElementById('switch').addEventListener('click', () => {
+    if (isHtml) {
+
+        /**
+         * Read from the autosaved markdown file and dangerously
+         * set it to the DOM.
+         */
+        fs.readFile(paths.autosaveMD, (err, data) => {
+            if (err) throw err;
+            editor.innerHTML = data;
+        });
+        isHtml = false;
+    } else {
+        fs.readFile(paths.autosaveHTML, (err, data) => {
+            if (err) throw err;
+            editor.innerHTML = data;
+        });
+        isHtml = true;
+    }
 });
 
 
@@ -87,5 +109,5 @@ function notice(message) {
     editor.insertBefore(notice, editor.firstChild);
     setTimeout(() => {
         notice.remove();
-    }, 1000);
+    }, 1500);
 }
