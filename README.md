@@ -5,6 +5,8 @@ Built on Electron.
 
 ##Install
 
+### You must have [Pandoc](http://pandoc.org/ "Pandoc's website") installed.
+
 Download the application for your respective operating system.
 
 ###OS X
