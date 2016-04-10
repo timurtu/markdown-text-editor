@@ -22,6 +22,21 @@ const paths = {
 
 gulp.task('build', ['main', 'js', 'sass']);
 
+gulp.task('lint', function () {
+    return gulp.src('src/**').pipe(eslint({
+            extends: 'eslint:recommended',
+            ecmaFeatures: {
+                'modules': true
+            },
+            'rules': {
+                'quotes': [1, 'single'],
+                'semi': [1, 'always']
+            }
+        }))
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
+});
+
 /**
  * Watch for changes and rebuild only those changes.
  */

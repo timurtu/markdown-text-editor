@@ -5,8 +5,8 @@ const paths = {
     autosaveMD: './docs/autosave.md'
 };
 let currentFontSize = 16;
-const MAX_FONT = 40;
-const MIN_FONT = 12;
+const maxFontSize = 40;
+const minFontSize = 12;
 
 init();
 
@@ -38,7 +38,7 @@ function init() {
  * Raise the font size by two pixels
  */
 document.getElementById('font-up').addEventListener('click', () => {
-    if (currentFontSize < MAX_FONT)
+    if (currentFontSize < maxFontSize)
         changeFontSize(currentFontSize += 2);
 });
 
@@ -46,7 +46,7 @@ document.getElementById('font-up').addEventListener('click', () => {
  * Lower the font size by two pixels
  */
 document.getElementById('font-down').addEventListener('click', () => {
-    if (currentFontSize > MIN_FONT)
+    if (currentFontSize > minFontSize)
         changeFontSize(currentFontSize -= 2);
 });
 
@@ -72,7 +72,6 @@ document.getElementById('save').addEventListener('click', () => {
 
         fs.writeFile(paths.autosaveMD, result, (err) => {
             if (err) throw err;
-            console.log(`File at ${paths.autosaveMD} was written successfully.`);
         });
     });
 

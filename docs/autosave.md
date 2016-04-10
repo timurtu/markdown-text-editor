@@ -1,8 +1,15 @@
 Header 1
 ========
 
-Emphasis, aka italics, with *asterisks* or *underscores*. Strong
-emphasis, aka bold, with **asterisks** or **underscores**.
+<div>
+
+<span style="line-height: 1.6;">Emphasis, aka italics, with
+</span>*asterisks*<span style="line-height: 1.6;"> or
+</span>*underscores*<span style="line-height: 1.6;">. Strong emphasis,
+aka bold, with </span>**asterisks**<span style="line-height: 1.6;"> or
+</span>**underscores**<span style="line-height: 1.6;">.</span>\
+
+</div>
 
 Header 2
 --------
@@ -35,6 +42,14 @@ uses two tildes. ~~Scratch this.~~
 
 <div class="sourceCode">
 
+<div class="sourceCode">
+
+<div class="sourceCode">
+
+<div class="sourceCode">
+
+<div class="sourceCode">
+
 ``` {.sourceCode .javascript}
 function doThing() {
 ```
@@ -48,9 +63,28 @@ function doThing() {
 <div class="sourceCode">
 
 ``` {.sourceCode .javascript}
-    console.log('Hello, Markup!');
+   console.log('Hello, Markup!');
+```
+
+</div>
+
+</div>
+
+<div class="sourceCode">
+
+<div class="sourceCode">
+
+``` {.sourceCode .javascript}
 }
 ```
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
