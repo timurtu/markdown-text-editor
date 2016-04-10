@@ -2,8 +2,7 @@ import fs from 'fs';
 import pandoc from 'pdc';
 const editor = document.getElementById('markdown-text');
 const paths = {
-    autosaveMD: './docs/autosave.md',
-    autosaveHTML: './docs/autosave.html'
+    autosaveMD: './docs/autosave.md'
 };
 let currentFontSize = 16;
 const maxFontSize = 40;
@@ -11,6 +10,23 @@ const minFontSize = 12;
 let isHtml = true;
 let elements;
 const toaster = document.getElementById('toaster');
+const saveButton = document.getElementById('save');
+
+document.getElementById('make-bold').addEventListener('click', () => {
+    document.execCommand('bold');
+});
+
+document.getElementById('emphasize').addEventListener('click', () => {
+    document.execCommand('italic');
+});
+
+document.getElementById('under-line').addEventListener('click', () => {
+    document.execCommand('underline');
+});
+
+document.getElementById('strike-through').addEventListener('click', () => {
+    document.execCommand('strikeThrough');
+});
 
 init();
 
@@ -23,7 +39,6 @@ function init() {
 
     if (fs.existsSync(paths.autosaveMD)) {
         fs.readFile(paths.autosaveMD, (err, data) => {
-
             if (err) throw err;
             pandoc(data.toString(), 'markdown', 'html', (err, result) => {
                 if (err) throw err;
@@ -44,17 +59,12 @@ function getContents() {
     }
 }
 
-// function storeHtml() {
-//     fs.writeFileSync(paths.autosaveHTML, editor.innerHTML);
-// }
-
 /**
  * Raise the font size by two pixels
  */
 document.getElementById('font-up').addEventListener('click', () => {
     if (currentFontSize < maxFontSize) {
         changeFontSize(currentFontSize += 2);
-        toast(`Font size is ${currentFontSize}.`);
     }
 });
 
@@ -64,7 +74,6 @@ document.getElementById('font-up').addEventListener('click', () => {
 document.getElementById('font-down').addEventListener('click', () => {
     if (currentFontSize > minFontSize) {
         changeFontSize(currentFontSize -= 2);
-        toast(`Font size is ${currentFontSize}.`);
     }
 });
 
@@ -81,13 +90,8 @@ function changeFontSize(pixels) {
  *  and convert it to markdown. Then save it to our autosave
  *  file.
  */
-const saveButton = document.getElementById('save');
 saveButton.addEventListener('click', () => {
 
-    fs.writeFile(paths.autosaveHTML, editor.innerHTML, (err) => {
-        if (err) throw err;
-        toast('Files Saved.');
-    });
     pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
         if (err) throw err;
         fs.writeFile(paths.autosaveMD, result, (err) => {
@@ -109,10 +113,15 @@ document.getElementById('switch').addEventListener('click', () => {
             if (err) throw err;
             editor.innerHTML = `<pre>${data.toString()}</pre>`;
             console.log(data.toString());
+            saveButton.style.display = 'none';
+
         });
+        editor.setAttribute('contenteditable', 'false');
         isHtml = false;
     } else {
         init();
+        saveButton.style.display = 'inline';
+        editor.setAttribute('contenteditable', 'true');
         isHtml = true;
     }
 });
@@ -123,4 +132,19 @@ function toast(message) {
     setTimeout(() => {
         toaster.textContent = '';
     }, 2000);
+}
+
+function replaceSelectedText(replacementText) {
+    var sel, range;
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(document.createTextNode(replacementText));
+        }
+    } else if (document.selection && document.selection.createRange) {
+        range = document.selection.createRange();
+        range.text = replacementText;
+    }
 }
