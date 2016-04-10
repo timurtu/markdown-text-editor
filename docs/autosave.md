@@ -16,19 +16,19 @@ normcore franzen wayfarers.
 
 *Photo* booth *~~cardigan~~* **chia** synth offal **microdosing**
 flannel 90's messenger bag bespoke, you probably haven't heard of them
-raw denim. 
+raw denim.
 
 Tote bag tattooed irony pug health goth butcher, cronut squid. Forage
-biodiesel iPhone, fashion axe organic twee raw denim artisan. 
+biodiesel iPhone, fashion axe organic twee raw denim artisan.
 
-Photo booth XOXO kitsch pabst, ~~gastropub~~ scenester cornhole echo
-park. 
+Photo booth **XOXO** *kitsch* pabst, ~~gastropub~~ scenester cornhole
+echo park.
 
-Tilde beard celiac master cleanse. 
+**Tilde** beard celiac ~~master~~ cleanse.
 
-Cardigan chia **letterpress** vinyl. 
+Cardigan chia **letterpress** vinyl.
 
-Literally messenger bag pickled craft beer blue bottle ramps twee
+Literally **messenger** bag pickled craft beer blue bottle ramps twee
 occupy, pug celiac tacos +1.
 
 [I'm an inline-style link](https://www.google.com)
@@ -63,80 +63,46 @@ text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon4
 Inline `code` has `back-ticks around` it.
 
 ### JavaScript
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-``` {.sourceCode .javascript}
-var s = "JavaScript syntax highlighting";
+```javascript
+var s = 'JavaScript syntax highlighting';
 alert(s);
-```
+````
 
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 ### Python
 
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-<div class="sourceCode">
-
-``` {.sourceCode .python}
+```python
 s = "Python syntax highlighting"
 print s
 ```
 
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 ### No language specified.
 
-    No language indicated, so no syntax highlighting.
-    But let's throw in a <b>tag</b>.
+```
+No language indicated, so no syntax highlighting.
+But let's throw in a <b>tag</b>.
+```
+
 
 Colons can be used to align columns.
 
-  Tables          Are             Cool
-  --------------- --------------- --------
-  col 3 is        right-aligned   \$1600
-  col 2 is        centered        \$12
-  zebra stripes   are neat        \$1
+Tables Are Cool
+
+------------------------------------------------------------------------
+
+col 3 is right-aligned \$1600 col 2 is centered \$12 zebra stripes are
+neat \$1
 
 There must be at least 3 dashes separating each header cell. The outer
 pipes (|) are optional, and you don't need to make the raw Markdown line
 up prettily. You can also use inline Markdown.
 
-  Markdown   Less        Pretty
-  ---------- ----------- ------------
-  *Still*    `renders`   **nicely**
-  1          2           3
+Markdown Less Pretty
+
+------------------------------------------------------------------------
+
+*Still* `renders` **nicely** 1 2 3
 
 > Blockquotes are very handy in email to emulate reply text. This line
 > is part of the same quote.
@@ -144,4 +110,6 @@ up prettily. You can also use inline Markdown.
 Quote break.
 
 > This is a very long line that will still be quoted properly when it
-> wraps. Oh boy
+> wraps. Oh boy let's keep writing to make sure this is long enough to
+> actually wrap for everyone. Oh, you can *put* **Markdown** into a
+> blockquote.

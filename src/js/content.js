@@ -1,5 +1,7 @@
 import fs from 'fs';
 import pandoc from 'pdc';
+import Remarkable from 'remarkable';
+const md = new Remarkable();
 const editor = document.getElementById('markdown-text');
 const paths = {
     autosaveMD: './docs/autosave.md'
@@ -39,11 +41,7 @@ function init() {
     if (fs.existsSync(paths.autosaveMD)) {
         fs.readFile(paths.autosaveMD, (err, data) => {
             if (err) throw err;
-            pandoc(data.toString(), 'markdown', 'html', (err, result) => {
-                if (err) throw err;
-                editor.innerHTML = result;
-                getContents();
-            });
+            editor.innerHTML = md.render(data.toString());
         });
     } else {
         editor.innerHTML = 'Markdown goes here.';
@@ -112,7 +110,6 @@ document.getElementById('switch').addEventListener('click', () => {
             if (err) throw err;
             editor.innerHTML = `<pre>${data.toString()}</pre>`;
             saveButton.style.display = 'none';
-
         });
         editor.setAttribute('contenteditable', 'false');
         isHtml = false;
