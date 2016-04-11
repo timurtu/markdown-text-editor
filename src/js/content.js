@@ -42,7 +42,6 @@ init();
  */
 function init() {
 
-    hljs.initHighlightingOnLoad();
 
     if (fs.existsSync(autosavePath)) {
 
@@ -75,6 +74,7 @@ function init() {
                             mdfiles.forEach((mdfile) => {
                                 fs.readFile(`${autosavePath}/${file}/${mdfile}`, (err, mdfileContents) => {
                                     renderMD(mdfileContents.toString());
+                                    hljs.initHighlightingOnLoad();
                                 });
                             });
                         });

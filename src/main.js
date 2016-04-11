@@ -1,6 +1,6 @@
 import electron from 'electron';
 // Module to control application life.
-let app = electron.app;
+const app = electron.app;
 // Module to create native browser window.
 let BrowserWindow = electron.BrowserWindow;
 
