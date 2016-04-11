@@ -1,17 +1,29 @@
 import fs from 'fs';
+import path from 'path';
 import pandoc from 'pdc';
 import Remarkable from 'remarkable';
 import hljs from 'highlight.js';
 
-// Actual default values
-const md = new Remarkable({
+const editor = document.getElementById('markdown-text');
+const toaster = document.getElementById('toaster');
+const saveButton = document.getElementById('save');
+const autosavePath = './docs';
+
+let currentFontSize = 16;
+const maxFontSize = 40;
+const minFontSize = 12;
+
+let isHtml = true;
+let elements;
+let md = new Remarkable({
     highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
             try {
                 return hljs.highlight(lang, str).value;
-            } catch (err) {}
+            } catch (err) {
+                console.log(err);
+            }
         }
-
         try {
             return hljs.highlightAuto(str).value;
         } catch (err) {
@@ -22,15 +34,63 @@ const md = new Remarkable({
     }
 });
 
-const editor = document.getElementById('markdown-text');
-const autosavePath = './docs/autosave.md';
-let currentFontSize = 16;
-const maxFontSize = 40;
-const minFontSize = 12;
-let isHtml = true;
-let elements;
-const toaster = document.getElementById('toaster');
-const saveButton = document.getElementById('save');
+init();
+
+/**
+ *  Read from an autosaved markdown file and convert it to
+ *  Html. Then display it in on an editable DOM node.
+ */
+function init() {
+
+    hljs.initHighlightingOnLoad();
+
+    if (fs.existsSync(autosavePath)) {
+
+        fs.access(autosavePath, fs.R_OK | fs.W_OK, (err) => {
+
+            if (err) throw err;
+
+            fs.readdir(autosavePath, (err, data) => {
+
+                if (err) throw err;
+
+                let folders = data.toString().split(',');
+
+                folders.forEach((file) => {
+                    // Hidden files
+                    if (file.startsWith('.')) {
+                        return;
+                        // Add to list of Markdown Files
+                    } else if (file.endsWith('.md')) {
+                        // markdownFiles.push(file);
+                        fs.readFile(`${autosavePath}/${file}`, (err, mdcontent) => {
+                            if (err) throw err;
+                            renderMD(mdcontent.toString());
+                        });
+                        return;
+                        // Read subfolders and add them to the list
+                    } else {
+                        fs.readdir(`${autosavePath}/${file}`, (err, mdfiles) => {
+                            if (err) throw err;
+                            mdfiles.forEach((mdfile) => {
+                                fs.readFile(`${autosavePath}/${file}/${mdfile}`, (err, mdfileContents) => {
+                                    renderMD(mdfileContents.toString());
+                                });
+                            });
+                        });
+                    }
+                });
+            });
+        });
+
+    }
+
+}
+
+// Dangerously render markdown to html
+function renderMD(markdown) {
+    editor.innerHTML += md.render(markdown);
+}
 
 document.getElementById('make-bold').addEventListener('click', () => {
     document.execCommand('bold');
@@ -47,25 +107,6 @@ document.getElementById('under-line').addEventListener('click', () => {
 document.getElementById('strike-through').addEventListener('click', () => {
     document.execCommand('strikeThrough');
 });
-
-init();
-
-/**
- *  Read from an autosaved markdown file and convert it to
- *  Html. Then display it in on an editable DOM node.
- */
-function init() {
-
-    if (fs.existsSync(autosavePath)) {
-        fs.readFile(autosavePath, (err, data) => {
-            if (err) throw err;
-            editor.innerHTML = md.render(data.toString());
-        });
-    } else {
-        editor.innerHTML = 'Markdown goes here.';
-    }
-
-}
 
 function getContents() {
     if (editor.hasChildNodes()) {
