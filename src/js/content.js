@@ -7,7 +7,8 @@ import hljs from 'highlight.js';
 const editor = document.getElementById('markdown-text');
 const toaster = document.getElementById('toaster');
 const saveButton = document.getElementById('save');
-const autosavePath = './docs';
+const loadingBar = document.getElementById('loading-bar');
+const autosavePath = './docs/autosave.md';
 
 let currentFontSize = 16;
 const maxFontSize = 40;
@@ -42,44 +43,14 @@ init();
  */
 function init() {
 
-
     if (fs.existsSync(autosavePath)) {
 
         fs.access(autosavePath, fs.R_OK | fs.W_OK, (err) => {
 
             if (err) throw err;
-
-            fs.readdir(autosavePath, (err, data) => {
-
+            fs.readFile(autosavePath, (err, mdcontent) => {
                 if (err) throw err;
-
-                let folders = data.toString().split(',');
-
-                folders.forEach((file) => {
-                    // Hidden files
-                    if (file.startsWith('.')) {
-                        return;
-                        // Add to list of Markdown Files
-                    } else if (file.endsWith('.md')) {
-                        // markdownFiles.push(file);
-                        fs.readFile(`${autosavePath}/${file}`, (err, mdcontent) => {
-                            if (err) throw err;
-                            renderMD(mdcontent.toString());
-                        });
-                        return;
-                        // Read subfolders and add them to the list
-                    } else {
-                        fs.readdir(`${autosavePath}/${file}`, (err, mdfiles) => {
-                            if (err) throw err;
-                            mdfiles.forEach((mdfile) => {
-                                fs.readFile(`${autosavePath}/${file}/${mdfile}`, (err, mdfileContents) => {
-                                    renderMD(mdfileContents.toString());
-                                    hljs.initHighlightingOnLoad();
-                                });
-                            });
-                        });
-                    }
-                });
+                renderMD(mdcontent.toString());
             });
         });
 
@@ -148,15 +119,25 @@ function changeFontSize(pixels) {
  */
 saveButton.addEventListener('click', () => {
 
-    pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
-        if (err) throw err;
-        fs.writeFile(autosavePath, result, (err) => {
-            if (err) throw err;
-            toast('Files Saved.');
-        });
-    });
+    saveMD();
 
 });
+
+/**
+ * Save markdown to disk as a single file.
+ */
+function saveMD() {
+    fs.access(path.join(autosavePath), fs.W_OK | fs.R_OK, (err) => {
+        if (err) throw err;
+        pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+            if (err) throw err;
+            fs.writeFile(autosavePath, result, (err) => {
+                if (err) throw err;
+                toast('Files Saved.');
+            });
+        });
+    });
+}
 
 document.getElementById('switch').addEventListener('click', () => {
     if (isHtml) {
@@ -187,4 +168,3 @@ function toast(message) {
         toaster.textContent = '';
     }, 2000);
 }
-
