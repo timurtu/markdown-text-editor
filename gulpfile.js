@@ -5,11 +5,12 @@ const gulp = require('gulp');
 const changed = require('gulp-changed');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
+const rename = require("gulp-rename");
 
 const paths = {
     src: {
         all: 'src/**/*',
-        main: 'src/main.js',
+        main: 'src/index.js',
         js: 'src/js/**/*.js',
         sass: 'src/sass/**/*.scss'
     },
@@ -51,6 +52,7 @@ gulp.task('watch', ['build'], function () {
 gulp.task('main', () => {
     return gulp.src(paths.src.main)
         .pipe(changed(paths.dest.main))
+        .pipe(rename({basename: 'main'}))
         .pipe(babel({
             presets: ['es2015']
         }))

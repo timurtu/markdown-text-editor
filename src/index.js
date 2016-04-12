@@ -9,6 +9,7 @@ let BrowserWindow = electron.BrowserWindow;
 let mainWindow;
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 500, height: 475});
 

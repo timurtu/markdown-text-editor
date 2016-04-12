@@ -8366,14 +8366,14 @@ On OS X:
 
     electron/Electron.app/Contents/Resources/app/
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 On Windows and Linux:
 
     electron/resources/app
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 Then execute `Electron.app` (or `electron` on Linux, `electron.exe` on
@@ -9314,7 +9314,7 @@ Online/Offline Event Detection
 Online and offline event detection can be implemented in the renderer
 process using standard HTML5 APIs, as shown in the following example.
 
-*main.js*
+*index.js*
 
     const electron = require('electron');
     const app = electron.app;
@@ -9351,7 +9351,7 @@ Electron's inter-process communication utilities, the events can be
 forwarded to the main process and handled as needed, as shown in the
 following example.
 
-*main.js*
+*index.js*
 
     const electron = require('electron');
     const app = electron.app;
@@ -9449,7 +9449,7 @@ Generally, an Electron app is structured like this:
 
     your-app/
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 The format of `package.json` is exactly the same as that of Node's
@@ -9460,13 +9460,13 @@ script of your app, which will run the main process. An example of your
     {
       "name"    : "your-app",
       "version" : "0.1.0",
-      "main"    : "main.js"
+      "main"    : "index.js"
     }
 
 **Note**: If the `main` field is not present in `package.json`, Electron
 will attempt to load an `index.js`.
 
-The `main.js` should create windows and handle system events, a typical
+The `index.js` should create windows and handle system events, a typical
 example being:
 
     'use strict';
@@ -9528,7 +9528,7 @@ Finally the `index.html` is the web page you want to show:
 Run your app
 ------------
 
-Once you've created your initial `main.js`, `index.html`, and
+Once you've created your initial `index.js`, `index.html`, and
 `package.json` files, you'll probably want to try running your app
 locally to test it and make sure it's working as expected.
 
@@ -10883,8 +10883,8 @@ It creates a new `BrowserWindow` with native properties as set by the
     -   `acceptFirstMouse` Boolean - Whether the web view accepts a
         single mouse-down event that simultaneously activates
         the window. Default is `false`.
-    -   `disableAutoHideCursor` Boolean - Whether to hide cursor when
-        typing. Default is `false`.
+    -   `disableAutoHideCursor` Boolean - Whether to hide cursor
+        when typing. Default is `false`.
     -   `autoHideMenuBar` Boolean - Auto hide the menu bar unless the
         `Alt` key is pressed. Default is `false`.
     -   `enableLargerThanScreen` Boolean - Enable the window to be
@@ -10976,8 +10976,8 @@ properties:
 -   `webaudio` Boolean - Enables WebAudio support. Default is `true`.
 -   `plugins` Boolean - Whether plugins should be enabled. Default is
     `false`.
--   `experimentalFeatures` Boolean - Enables Chromium's experimental
-    features. Default is `false`.
+-   `experimentalFeatures` Boolean - Enables Chromium's
+    experimental features. Default is `false`.
 -   `experimentalCanvasFeatures` Boolean - Enables Chromium's
     experimental canvas features. Default is `false`.
 -   `directWrite` Boolean - Enables DirectWrite font rendering system
@@ -12031,7 +12031,7 @@ Reads `data` from the clipboard.
     -   `image` [NativeImage](native-image.md)
 -   `type` String (optional)
 
-<!-- -->
+&lt;!-- --&gt;
 
     clipboard.write({text: 'test', html: "<b>test</b>"});
 
@@ -12241,8 +12241,8 @@ The `crash-reporter` module has the following methods:
     -   `submitURL` String - URL that crash reports will be sent to
         as POST.
     -   `productName` String (optional) - Default is `Electron`.
-    -   `autoSubmit` Boolean - Send the crash report without user
-        interaction. Default is `true`.
+    -   `autoSubmit` Boolean - Send the crash report without
+        user interaction. Default is `true`.
     -   `ignoreSystemCrashHandler` Boolean - Default is `false`.
     -   `extra` Object - An object you can define that will be sent
         along with the report. Only string properties are sent
@@ -13778,8 +13778,8 @@ The `powerSaveBlocker` module has the following methods:
 ### `powerSaveBlocker.start(type)`
 
 -   `type` String - Power save blocker type.
-    -   `prevent-app-suspension` - Prevent the application from being
-        suspended. Keeps system active but allows screen to be
+    -   `prevent-app-suspension` - Prevent the application from
+        being suspended. Keeps system active but allows screen to be
         turned off. Example use cases: downloading a file or
         playing audio.
     -   `prevent-display-sleep`- Prevent the display from going
@@ -13820,8 +13820,8 @@ process
 The `process` object in Electron has the following differences from the
 one in upstream node:
 
--   `process.type` String - Process's type, can be `browser` (i.e. main
-    process) or `renderer`.
+-   `process.type` String - Process's type, can be `browser` (i.e.
+    main process) or `renderer`.
 -   `process.versions['electron']` String - Version of Electron.
 -   `process.versions['chrome']` String - Version of Chromium.
 -   `process.resourcesPath` String - Path to JavaScript source code.
@@ -15086,7 +15086,7 @@ it is usually attached with a context menu.
 -   On Linux in order for changes made to individual `MenuItem`s to take
     effect, you have to call `setContextMenu` again. For example:
 
-<!-- -->
+&lt;!-- --&gt;
 
     contextMenu.items[2].checked = false;
     appIcon.setContextMenu(contextMenu);
@@ -15795,13 +15795,13 @@ Inserts `text` to the focused element.
         follow up, defaults to `false`.
     -   `matchCase` Boolean - Whether search should be case-sensitive,
         defaults to `false`.
-    -   `wordStart` Boolean - Whether to look only at the start of
-        words. defaults to `false`.
+    -   `wordStart` Boolean - Whether to look only at the start
+        of words. defaults to `false`.
     -   `medialCapitalAsWordStart` Boolean - When combined with
         `wordStart`, accepts a match in the middle of a word if the
-        match begins with an uppercase letter followed by a lowercase or
-        non-letter. Accepts several other intra-word matches, defaults
-        to `false`.
+        match begins with an uppercase letter followed by a lowercase
+        or non-letter. Accepts several other intra-word matches,
+        defaults to `false`.
 
 Starts a request to find all matches for the `text` in the web page and
 returns an `Integer` representing the request id used for the request.
@@ -16709,13 +16709,13 @@ Inserts `text` to the focused element.
         follow up, defaults to `false`.
     -   `matchCase` Boolean - Whether search should be case-sensitive,
         defaults to `false`.
-    -   `wordStart` Boolean - Whether to look only at the start of
-        words. defaults to `false`.
+    -   `wordStart` Boolean - Whether to look only at the start
+        of words. defaults to `false`.
     -   `medialCapitalAsWordStart` Boolean - When combined with
         `wordStart`, accepts a match in the middle of a word if the
-        match begins with an uppercase letter followed by a lowercase or
-        non-letter. Accepts several other intra-word matches, defaults
-        to `false`.
+        match begins with an uppercase letter followed by a lowercase
+        or non-letter. Accepts several other intra-word matches,
+        defaults to `false`.
 
 Starts a request to find all matches for the `text` in the web page and
 returns an `Integer` representing the request id used for the request.
@@ -17952,14 +17952,14 @@ On OS X:
 
     electron/Electron.app/Contents/Resources/app/
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 On Windows and Linux:
 
     electron/resources/app
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 Then execute `Electron.app` (or `electron` on Linux, `electron.exe` on
@@ -18900,7 +18900,7 @@ Online/Offline Event Detection
 Online and offline event detection can be implemented in the renderer
 process using standard HTML5 APIs, as shown in the following example.
 
-*main.js*
+*index.js*
 
     const electron = require('electron');
     const app = electron.app;
@@ -18937,7 +18937,7 @@ Electron's inter-process communication utilities, the events can be
 forwarded to the main process and handled as needed, as shown in the
 following example.
 
-*main.js*
+*index.js*
 
     const electron = require('electron');
     const app = electron.app;
@@ -19035,7 +19035,7 @@ Generally, an Electron app is structured like this:
 
     your-app/
     ├── package.json
-    ├── main.js
+    ├── index.js
     └── index.html
 
 The format of `package.json` is exactly the same as that of Node's
@@ -19046,13 +19046,13 @@ script of your app, which will run the main process. An example of your
     {
       "name"    : "your-app",
       "version" : "0.1.0",
-      "main"    : "main.js"
+      "main"    : "index.js"
     }
 
 **Note**: If the `main` field is not present in `package.json`, Electron
 will attempt to load an `index.js`.
 
-The `main.js` should create windows and handle system events, a typical
+The `index.js` should create windows and handle system events, a typical
 example being:
 
     'use strict';
@@ -19114,7 +19114,7 @@ Finally the `index.html` is the web page you want to show:
 Run your app
 ------------
 
-Once you've created your initial `main.js`, `index.html`, and
+Once you've created your initial `index.js`, `index.html`, and
 `package.json` files, you'll probably want to try running your app
 locally to test it and make sure it's working as expected.
 

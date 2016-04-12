@@ -3,6 +3,8 @@ import path from 'path';
 import pandoc from 'pdc';
 import Remarkable from 'remarkable';
 import hljs from 'highlight.js';
+// import toolbar from 'toolbarjs';
+// toolbar();
 
 const editor = document.getElementById('markdown-text');
 const toaster = document.getElementById('toaster');
@@ -50,6 +52,7 @@ function init() {
             if (err) throw err;
             fs.readFile(autosavePath, (err, mdcontent) => {
                 if (err) throw err;
+                hljs.initHighlightingOnLoad();
                 renderMD(mdcontent.toString());
             });
         });
@@ -118,9 +121,7 @@ function changeFontSize(pixels) {
  *  file.
  */
 saveButton.addEventListener('click', () => {
-
     saveMD();
-
 });
 
 /**

@@ -10,15 +10,26 @@
     "electron": "electron main.js",
     "watch": "gulp watch",
     "build": "gulp build",
+    "buildng": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "watchng": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
+    "electronng": "electron app",
     "lint": "node_modules/jshint/bin/jshint --verbose --show-non-errors src"
   },
   "homepage": "https://github.com/timurtu/markdown-text-editor#readme",
+  "dependencies": {
+    "github-markdown-css": "^2.2.1",
+    "highlight.js": "^9.3.0",
+    "pdc": "^0.2.2",
+    "remarkable": "^1.6.2",
+    "toolbarjs": "^1.1.2"
+  },
   "devDependencies": {
     "babel-preset-es2015": "^6.6.0",
     "electron-prebuilt": "^0.37.5",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-changed": "^1.3.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "jshint": "^2.9.1",
     "npm-run-all": "^1.7.0",
@@ -40,12 +51,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/timurtu/markdown-text-editor/issues"
-  },
-  "dependencies": {
-    "github-markdown-css": "^2.2.1",
-    "highlight.js": "^9.3.0",
-    "pdc": "^0.2.2",
-    "remarkable": "^1.6.2",
-    "spinkit": "^1.2.5"
   }
 }

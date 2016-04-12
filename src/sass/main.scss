@@ -30,7 +30,7 @@ body {
   top: 0;
   padding: 12px;
   background: rgba(74, 195, 184, 0.62);
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.125);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.125);
 
   #make-bold {
     font-weight: 700;
@@ -75,15 +75,6 @@ body {
   &::selection {
     color: #3C2923;
     background: rgba(139, 195, 74, 0.5);
-  }
-
-  .sourceCode {
-    //background-color: #565656;
-    //color: #EBFDFF;
-    //border-radius: 5px;
-    //line-height: 1.6;
-    //margin: 0;
-    //padding: 2px;
   }
 
   hr {
