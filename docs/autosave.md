@@ -1,6 +1,4 @@
-<span
-style="font-size: 1.75em; font-weight: bold; line-height: 1.225;">API
-References</span>\
+**API References**
 
 -   [Synopsis](api/synopsis.md)
 -   [Process Object](api/process.md)
