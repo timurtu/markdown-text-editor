@@ -11,6 +11,7 @@ const toaster = document.getElementById('toaster');
 const saveButton = document.getElementById('save');
 const loadingBar = document.getElementById('loading-bar');
 const autosavePath = './docs/autosave.md';
+const clipboard = require('electron').clipboard;
 
 let currentFontSize = 16;
 const maxFontSize = 40;
@@ -82,6 +83,18 @@ document.getElementById('strike-through').addEventListener('click', () => {
     document.execCommand('strikeThrough');
 });
 
+// Copy all markdown to clipboard
+document.getElementById('copy').addEventListener('click', () => {
+    saveMD().then(function () {
+        fs.readFile(autosavePath, (err, data) => {
+            if (err) throw err;
+            clipboard.writeText(data.toString());
+            console.log('Markdown Copied!');
+        });
+
+    });
+});
+
 function getContents() {
     if (editor.hasChildNodes()) {
         elements = editor.childNodes;
@@ -128,16 +141,20 @@ saveButton.addEventListener('click', () => {
  * Save markdown to disk as a single file.
  */
 function saveMD() {
-    fs.access(path.join(autosavePath), fs.W_OK | fs.R_OK, (err) => {
-        if (err) throw err;
-        pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+    return new Promise((resolve, reject) => {
+        fs.access(path.join(autosavePath), fs.W_OK | fs.R_OK, (err) => {
             if (err) throw err;
-            fs.writeFile(autosavePath, result, (err) => {
+            pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
                 if (err) throw err;
-                toast('Files Saved.');
+                fs.writeFile(autosavePath, result, (err) => {
+                    if (err) throw err;
+                    toast('Markdown Saved.');
+                    resolve();
+                });
             });
         });
     });
+
 }
 
 document.getElementById('switch').addEventListener('click', () => {
