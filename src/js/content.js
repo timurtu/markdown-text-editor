@@ -3,6 +3,8 @@ import path from 'path';
 import pandoc from 'pdc';
 import Remarkable from 'remarkable';
 import hljs from 'highlight.js';
+import {clipboard} from 'electron';
+
 
 const editor = document.getElementById('markdown-text');
 const toaster = document.getElementById('toaster');
@@ -10,7 +12,6 @@ const saveButton = document.getElementById('save');
 const loadingBar = document.getElementById('loading-bar');
 const autosavePath = './docs/autosave.md';
 const docsPath = './docs/';
-const clipboard = require('electron').clipboard;
 
 let currentFontSize = 16;
 const maxFontSize = 40;
@@ -119,7 +120,7 @@ document.getElementById('copy').addEventListener('click', () => {
         fs.readFile(autosavePath, (err, data) => {
             if (err) throw err;
             clipboard.writeText(data.toString());
-            toast('Markdown Copied!');
+            toast('Copied!');
         });
 
     });
@@ -178,7 +179,7 @@ function saveMD() {
                 if (err) throw err;
                 fs.writeFile(autosavePath, result, (err) => {
                     if (err) throw err;
-                    toast('Markdown Saved.');
+                    toast('Saved!');
                     resolve();
                 });
             });
