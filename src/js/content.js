@@ -96,12 +96,17 @@ setTimeout(() => {
             if (folderPath == 'markup')
                 folderPath = '';
             if (filePath.ext === '.md') {
-                fs.readFile(path.join(docsPath, folderPath.base, filePath.base), function (err, data) {
+                fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
                     if (err) throw err;
                     editor.innerHTML = md.render(data.toString());
                 });
-            } else if (filePath.startsWith('http')) {
-                
+            } else if (event.target.href.startsWith('http')) {
+                // window.open(event.target.href);
+                // const webview = document.getElementById('webview');
+                // webview.setAttribute('src', event.target.href);
+                // webview.addEventListener('click', () => {
+                //     init();
+                // });
             }
         });
     });
