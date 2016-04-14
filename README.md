@@ -21,4 +21,3 @@ Download the application for your respective operating system.
 - Fork this repo
 - `cd` into it
 - `npm install && npm start`
-- Send a pull request
