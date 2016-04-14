@@ -56,8 +56,8 @@ function init() {
                 hljs.initHighlightingOnLoad();
                 renderMD(mdcontent.toString());
             });
-        });
 
+        });
     }
 
 }
@@ -83,6 +83,7 @@ document.getElementById('strike-through').addEventListener('click', () => {
     document.execCommand('strikeThrough');
 });
 
+// Make links do things
 var links = document.getElementsByTagName('a');
 // collect all the links first
 setTimeout(() => {
@@ -126,6 +127,9 @@ document.getElementById('copy').addEventListener('click', () => {
     });
 });
 
+/**
+ * Get the current editor's contents as a list of nodes
+ */
 function getContents() {
     if (editor.hasChildNodes()) {
         elements = editor.childNodes;
@@ -185,7 +189,6 @@ function saveMD() {
             });
         });
     });
-
 }
 
 document.getElementById('switch').addEventListener('click', () => {
