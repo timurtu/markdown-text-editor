@@ -9,7 +9,7 @@ import hljs from 'highlight.js';
 import pandoc from 'pdc';
 
 // Paths for getting and saving markdown files
-const autosavePath = './docs/autosave.md';
+const autoSavePath = './docs/autosave.md';
 const docsPath = './docs/';
 
 // Toolbar buttons
@@ -23,20 +23,29 @@ const minFontSize = 12;
 
 let isMarkdown = false;
 
-let elements;
+let elements = [];
 
 let md = new Remarkable({
+
     highlight: (str, lang) => {
+
         if (lang && hljs.getLanguage(lang)) {
+
             try {
+
                 return hljs.highlight(lang, str).value;
+
             } catch (err) {
                 console.log(err);
             }
         }
+
         try {
+
             return hljs.highlightAuto(str).value;
+
         } catch (err) {
+
             console.log(err);
         }
 
@@ -57,13 +66,13 @@ getContents();
  */
 function init() {
 
-    if (fs.existsSync(autosavePath)) {
+    if (fs.existsSync(autoSavePath)) {
 
-        fs.access(autosavePath, fs.R_OK | fs.W_OK, (err) => {
+        fs.access(autoSavePath, fs.R_OK | fs.W_OK, (err) => {
 
             if (err) throw err;
 
-            fs.readFile(autosavePath, (err, mdcontent) => {
+            fs.readFile(autoSavePath, (err, mdcontent) => {
 
                 if (err) throw err;
 
@@ -140,13 +149,13 @@ document.getElementById('copy').addEventListener('click', () => {
 
     saveMD().then(function () {
 
-        fs.readFile(autosavePath, (err, data) => {
+        fs.readFile(autoSavePath, (err, data) => {
 
             if (err) throw err;
 
             clipboard.writeText(data.toString());
 
-            notify('Copied!');
+            notify('Copied all Markdown contents to clipboard!');
         });
 
     });
@@ -161,20 +170,16 @@ function getContents() {
 
         if (editor.hasChildNodes()) {
 
-            elements = editor.childNodes;
+            Array.prototype.forEach.call(editor.childNodes, (element) => {
 
-            Array.prototype.forEach.call(elements, (element) => {
-
-                if(element.nodeName == '#text') {
+                if (element.nodeName == '#text') {
                     return;
                 }
 
-                console.log(element);
+                elements.push(element);
             });
-
         }
     }, 3000);
-
 }
 
 /**
@@ -225,7 +230,7 @@ function saveMD() {
 
     return new Promise((resolve, reject) => {
 
-        fs.access(path.join(autosavePath), fs.W_OK | fs.R_OK, (err) => {
+        fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
 
             if (err) throw err;
 
@@ -233,11 +238,11 @@ function saveMD() {
 
                 if (err) throw err;
 
-                fs.writeFile(autosavePath, result, (err) => {
+                fs.writeFile(autoSavePath, result, (err) => {
 
                     if (err) throw err;
 
-                    notify('Saved!');
+                    notify(`Saved Markdown to ${autoSavePath}!`);
 
                     resolve();
                 });
@@ -246,44 +251,16 @@ function saveMD() {
     });
 }
 
-document.getElementById('switch').addEventListener('click', () => {
-    if (!isMarkdown) {
-
-        /**
-         * Read from the autosaved markdown file and dangerously
-         * set it to the DOM.
-         */
-        fs.readFile(autosavePath, (err, data) => {
-
-            if (err) throw err;
-
-            editor.innerHTML = `<pre>${data.toString()}</pre>`;
-
-            saveButton.style.display = 'none';
-        });
-
-        // Don't let the user edit markdown directly because that's not what this app is for
-        editor.setAttribute('contenteditable', 'false');
-        isMarkdown = true;
-    } else {
-
-        init();
-
-        saveButton.style.display = 'inline';
-
-        editor.setAttribute('contenteditable', 'true');
-        isMarkdown = false;
-    }
-});
-
-
 function notify(message) {
 
-    toaster.textContent = message;
+    const notification = new Notification('Markup', {
 
-    setTimeout(() => {
+        body: message
+    });
 
-        toaster.textContent = '';
+    notification.onclick = () => {
 
-    }, 2000);
+        alert(`Clicked on ${message}!`);
+    }
+
 }
