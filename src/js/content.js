@@ -56,9 +56,9 @@ init();
 
 makeLinks();
 
-makeCommands();
+makeToolbarButtons();
 
-getContents();
+getEditorContents();
 
 
 /**
@@ -95,6 +95,103 @@ function init() {
 function renderMD(markdown) {
 
     editor.innerHTML += md.render(markdown);
+}
+
+
+/**
+ * Make toolbar buttons do things
+ */
+function makeToolbarButtons() {
+
+    makeCommands();
+
+    // Copy all markdown to clipboard
+    document.getElementById('copy').onclick = () => {
+
+        saveMD().then(() => {
+
+            fs.readFile(autoSavePath, (err, data) => {
+
+                if (err) throw err;
+
+                clipboard.writeText(data.toString());
+
+                notify('Copied all Markdown contents to clipboard!');
+            });
+        });
+    };
+
+    /**
+     * Raise the font size by two pixels
+     */
+    document.getElementById('font-up').onclick = () => {
+
+        if (currentFontSize < maxFontSize) {
+
+            changeFontSize(currentFontSize += 2);
+        }
+    };
+
+    /**
+     * Lower the font size by two pixels
+     */
+    document.getElementById('font-down').onclick = () => {
+
+        if (currentFontSize > minFontSize) {
+
+            changeFontSize(currentFontSize -= 2);
+        }
+    };
+
+    /**
+     * @param pixels The amount of pixels to set the font
+     * size to.
+     */
+    function changeFontSize(pixels) {
+
+        editor.style.fontSize = `${pixels}px`;
+    }
+
+    /**
+     *  Dangerously take the html from our editable DOM node
+     *  and convert it to markdown. Then save it to our autosavePath
+     *  file.
+     */
+    document.getElementById('save').onclick = () => {
+
+        saveMD();
+    };
+
+
+    /**
+     * Save markdown to disk as a single file.
+     *
+     * @returns {Promise} Empty promise that resolves when done saving.
+     */
+    function saveMD() {
+
+        return new Promise((resolve, reject) => {
+
+            fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
+
+                if (err) throw err;
+
+                pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+
+                    if (err) throw err;
+
+                    fs.writeFile(autoSavePath, result, (err) => {
+
+                        if (err) throw err;
+
+                        notify(`Saved Markdown to ${autoSavePath}!`);
+
+                        resolve();
+                    });
+                });
+            });
+        });
+    }
 }
 
 
@@ -159,9 +256,10 @@ function makeLinks() {
 
 
 /**
- * Get the current editor's contents as a list of nodes
+ * Get the current editor's contents and add them
+ * to the elements array.
  */
-function getContents() {
+function getEditorContents() {
 
     setTimeout(() => {
 
@@ -180,92 +278,6 @@ function getContents() {
     }, 3000);
 }
 
-// Copy all markdown to clipboard
-document.getElementById('copy').onclick = () => {
-
-    saveMD().then(() => {
-
-        fs.readFile(autoSavePath, (err, data) => {
-
-            if (err) throw err;
-
-            clipboard.writeText(data.toString());
-
-            notify('Copied all Markdown contents to clipboard!');
-        });
-    });
-};
-
-/**
- * Raise the font size by two pixels
- */
-document.getElementById('font-up').onclick = () => {
-
-    if (currentFontSize < maxFontSize) {
-
-        changeFontSize(currentFontSize += 2);
-    }
-};
-
-/**
- * Lower the font size by two pixels
- */
-document.getElementById('font-down').onclick = () => {
-
-    if (currentFontSize > minFontSize) {
-
-        changeFontSize(currentFontSize -= 2);
-    }
-};
-
-/**
- * @param pixels The amount of pixels to set the font
- * size to.
- */
-function changeFontSize(pixels) {
-
-    editor.style.fontSize = `${pixels}px`;
-}
-
-/**
- *  Dangerously take the html from our editable DOM node
- *  and convert it to markdown. Then save it to our autosavePath
- *  file.
- */
-document.getElementById('save').onclick = () => {
-
-    saveMD();
-};
-
-/**
- * Save markdown to disk as a single file.
- *
- * @returns {Promise} Empty promise that resolves when done saving.
- */
-function saveMD() {
-
-    return new Promise((resolve, reject) => {
-
-        fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
-
-            if (err) throw err;
-
-            pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
-
-                if (err) throw err;
-
-                fs.writeFile(autoSavePath, result, (err) => {
-
-                    if (err) throw err;
-
-                    notify(`Saved Markdown to ${autoSavePath}!`);
-
-                    resolve();
-                });
-            });
-        });
-    });
-}
 
 /**
  * Uses Electron and the HTML5 Notification APIs to create a
