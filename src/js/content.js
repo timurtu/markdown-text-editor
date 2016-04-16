@@ -12,19 +12,18 @@ import pandoc from 'pdc';
 const autoSavePath = './docs/autosave.md';
 const docsPath = './docs/';
 
-// Toolbar buttons
-const editor = document.getElementById('markdown-text'); // Editable DOM node for markdown content
-const toaster = document.getElementById('toaster');
-const saveButton = document.getElementById('save');
+// Editable DOM node for markdown content
+const editor = document.getElementById('markdown-text');
 
 let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
 
-let isMarkdown = false;
-
 let elements = [];
 
+/**
+ * Create a markdown renderer with syntax highlighting.
+ */
 let md = new Remarkable({
 
     highlight: (str, lang) => {
@@ -36,7 +35,7 @@ let md = new Remarkable({
                 return hljs.highlight(lang, str).value;
 
             } catch (err) {
-                console.log(err);
+                console.log(`highlight.js error - ${err}`);
             }
         }
 
@@ -46,7 +45,7 @@ let md = new Remarkable({
 
         } catch (err) {
 
-            console.log(err);
+            console.log(`highlight.js error - ${err}`);
         }
 
         return ''; // use external default escaping
@@ -56,6 +55,8 @@ let md = new Remarkable({
 init();
 
 makeLinks();
+
+makeCommands();
 
 getContents();
 
@@ -83,38 +84,50 @@ function init() {
             });
         });
     }
-
 }
 
+
+/**
+ * Dangerously render markdown to html
+ *
+ * @param markdown raw markdown string
+ */
 function renderMD(markdown) {
 
-    // Dangerously render markdown to html
     editor.innerHTML += md.render(markdown);
 }
 
-const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
 
-commands.forEach((command) => {
+/**
+ * These are actually browser APIs
+ */
+function makeCommands() {
 
-    document.getElementById(command).addEventListener('click', () => {
+    const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
 
-        // These are actually browser APIs
-        document.execCommand(command);
+    commands.forEach((command) => {
+
+        document.getElementById(command).onclick = () => {
+
+            document.execCommand(command);
+        };
     });
-});
+}
 
-// Make links do things
+
+/**
+ * Make links do things
+ */
 function makeLinks() {
 
     setTimeout(() => {
 
         let links = document.getElementsByTagName('a');
 
-
         // collect all the links and link them together
         Array.prototype.forEach.call(links, (link) => {
 
-            link.addEventListener('click', (event) => {
+            link.onclick = (event) => {
 
                 event.preventDefault();
 
@@ -139,27 +152,11 @@ function makeLinks() {
                 } else if (href.startsWith('http')) {
 
                 }
-            });
+            };
         });
     }, 3000);
 }
 
-// Copy all markdown to clipboard
-document.getElementById('copy').addEventListener('click', () => {
-
-    saveMD().then(function () {
-
-        fs.readFile(autoSavePath, (err, data) => {
-
-            if (err) throw err;
-
-            clipboard.writeText(data.toString());
-
-            notify('Copied all Markdown contents to clipboard!');
-        });
-
-    });
-});
 
 /**
  * Get the current editor's contents as a list of nodes
@@ -172,7 +169,8 @@ function getContents() {
 
             Array.prototype.forEach.call(editor.childNodes, (element) => {
 
-                if (element.nodeName == '#text') {
+                if (element.nodeName === '#text') {
+
                     return;
                 }
 
@@ -182,27 +180,43 @@ function getContents() {
     }, 3000);
 }
 
+// Copy all markdown to clipboard
+document.getElementById('copy').onclick = () => {
+
+    saveMD().then(() => {
+
+        fs.readFile(autoSavePath, (err, data) => {
+
+            if (err) throw err;
+
+            clipboard.writeText(data.toString());
+
+            notify('Copied all Markdown contents to clipboard!');
+        });
+    });
+};
+
 /**
  * Raise the font size by two pixels
  */
-document.getElementById('font-up').addEventListener('click', () => {
+document.getElementById('font-up').onclick = () => {
 
     if (currentFontSize < maxFontSize) {
 
         changeFontSize(currentFontSize += 2);
     }
-});
+};
 
 /**
  * Lower the font size by two pixels
  */
-document.getElementById('font-down').addEventListener('click', () => {
+document.getElementById('font-down').onclick = () => {
 
     if (currentFontSize > minFontSize) {
 
         changeFontSize(currentFontSize -= 2);
     }
-});
+};
 
 /**
  * @param pixels The amount of pixels to set the font
@@ -218,13 +232,15 @@ function changeFontSize(pixels) {
  *  and convert it to markdown. Then save it to our autosavePath
  *  file.
  */
-saveButton.addEventListener('click', () => {
+document.getElementById('save').onclick = () => {
 
     saveMD();
-});
+};
 
 /**
  * Save markdown to disk as a single file.
+ *
+ * @returns {Promise} Empty promise that resolves when done saving.
  */
 function saveMD() {
 
@@ -251,6 +267,12 @@ function saveMD() {
     });
 }
 
+/**
+ * Uses Electron and the HTML5 Notification APIs to create a
+ * native desktop notification.
+ *
+ * @param message String that will be notified.
+ */
 function notify(message) {
 
     const notification = new Notification('Markup', {
