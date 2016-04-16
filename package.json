@@ -10,8 +10,12 @@
     "electron": "electron main.js",
     "watch": "gulp watch",
     "build": "gulp build",
-    "lint": "node_modules/jshint/bin/jshint --verbose --show-non-errors src",
+    "lint": "node_modules/jshint/bin/jshint --verbose --reporter=node_modules/jshint-stylish src",
     "package": "electron-packager ./ markup --platform=all --arch=x64 --version=0.37.5"
+  },
+  "jshintConfig": {
+    "esversion": 6,
+    "asi": true
   },
   "homepage": "https://github.com/timurtu/markdown-text-editor#readme",
   "dependencies": {
@@ -30,11 +34,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
     "npm-run-all": "^1.7.0",
     "rimraf": "^2.5.2"
-  },
-  "jshintConfig": {
-    "esversion": 6
   },
   "repository": {
     "type": "git",

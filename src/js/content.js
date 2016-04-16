@@ -1,25 +1,25 @@
-import {clipboard, remote} from 'electron';
-const dialog = remote.dialog;
+import {clipboard, remote} from 'electron'
+const dialog = remote.dialog
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'fs'
+import path from 'path'
 
-import Remarkable from 'remarkable';
-import hljs from 'highlight.js';
-import pandoc from 'pdc';
+import Remarkable from 'remarkable'
+import hljs from 'highlight.js'
+import pandoc from 'pdc'
 
 // Paths for getting and saving markdown files
-const autoSavePath = './docs/autosave.md';
-const docsPath = './docs/';
+const autoSavePath = './docs/autosave.md'
+const docsPath = './docs/'
 
 // Editable DOM node for markdown content
-const editor = document.getElementById('markdown-text');
+const editor = document.getElementById('markdown-text')
 
-let currentFontSize = 16;
-const maxFontSize = 40;
-const minFontSize = 12;
+let currentFontSize = 16
+const maxFontSize = 40
+const minFontSize = 12
 
-let elements = [];
+let elements = []
 
 /**
  * Create a markdown renderer with syntax highlighting.
@@ -31,29 +31,25 @@ let md = new Remarkable({
     if (lang && hljs.getLanguage(lang)) {
 
       try {
-
-        return hljs.highlight(lang, str).value;
-
+        return hljs.highlight(lang, str).value
       } catch (err) {
-        console.log(`highlight.js error - ${err}`);
+        console.log(`highlight.js error - ${err}`)
       }
     }
 
     try {
-
-      return hljs.highlightAuto(str).value;
-
+      return hljs.highlightAuto(str).value
     } catch (err) {
-
-      console.log(`highlight.js error - ${err}`);
+      console.log(`highlight.js error - ${err}`)
     }
 
-    return ''; // use external default escaping
+    return '' // use external default escaping
   }
-});
+})
 
-init();
+init()
 
+makeCommands()
 
 /**
  *  Read from an autosaved markdown file and convert it to
@@ -65,61 +61,105 @@ function init() {
 
     fs.access(autoSavePath, fs.R_OK | fs.W_OK, (err) => {
 
-      if (err) throw err;
+      if (err) throw err
 
       fs.readFile(autoSavePath, (err, mdcontent) => {
 
-        if (err) throw err;
+        if (err) throw err
 
         // Syntax Highlighting
-        hljs.initHighlightingOnLoad();
+        hljs.initHighlightingOnLoad()
 
-        renderMD(mdcontent.toString());
+        renderMarkdown(mdcontent.toString())
 
-        makeLinks();
+        makeLinks()
 
-        makeToolbarButtons();
+        makeToolbarButtons()
 
-        getEditorContents();
-      });
-    });
+        getEditorContents()
+      })
+    })
   }
 }
 
+/**
+ * These are actually browser APIs
+ */
+function makeCommands() {
+
+  const commands = ['bold', 'italic', 'underline', 'strikeThrough']
+
+  commands.forEach((command) => {
+
+    document.getElementById(command).onclick = () => {
+
+      document.execCommand(command)
+    }
+  })
+}
 
 /**
  * Dangerously render markdown to html
  *
  * @param markdown raw markdown string
  */
-function renderMD(markdown) {
+function renderMarkdown(markdown) {
 
-  editor.innerHTML += md.render(markdown);
+  editor.innerHTML += md.render(markdown)
 }
 
+/**
+ * Save markdown to disk as a single file.
+ *
+ * @returns {Promise} Empty promise that resolves when done saving.
+ */
+function saveMarkdown() {
+
+  return new Promise((resolve, reject) => {
+
+    fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
+
+      if (err) throw err
+
+      pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+
+        if (err) throw err
+
+        fs.writeFile(autoSavePath, result, (err) => {
+
+          if (err) throw err
+
+          notify(`Saved Markdown to ${autoSavePath}!`)
+
+          resolve()
+        })
+      })
+    })
+  })
+}
 
 /**
  * Make toolbar buttons do things
  */
 function makeToolbarButtons() {
 
-  makeCommands();
+  makeCommands()
 
   // Copy all markdown to clipboard
   document.getElementById('copy').onclick = () => {
 
-    saveMD().then(() => {
+    saveMarkdown().then(() => {
 
       fs.readFile(autoSavePath, (err, data) => {
 
-        if (err) throw err;
+        if (err) throw err
 
-        clipboard.writeText(data.toString());
+        clipboard.writeText(data.toString())
 
-        notify('Copied all Markdown contents to clipboard!');
-      });
-    });
-  };
+        notify('Copied all Markdown contents to clipboard!')
+      })
+    })
+  }
 
   /**
    * Raise the font size by two pixels
@@ -128,9 +168,9 @@ function makeToolbarButtons() {
 
     if (currentFontSize < maxFontSize) {
 
-      changeFontSize(currentFontSize += 2);
+      changeFontSize(currentFontSize += 2)
     }
-  };
+  }
 
   /**
    * Lower the font size by two pixels
@@ -139,17 +179,8 @@ function makeToolbarButtons() {
 
     if (currentFontSize > minFontSize) {
 
-      changeFontSize(currentFontSize -= 2);
+      changeFontSize(currentFontSize -= 2)
     }
-  };
-
-  /**
-   * @param pixels The amount of pixels to set the font
-   * size to.
-   */
-  function changeFontSize(pixels) {
-
-    editor.style.fontSize = `${pixels}px`;
   }
 
   /**
@@ -159,58 +190,19 @@ function makeToolbarButtons() {
    */
   document.getElementById('save').onclick = () => {
 
-    saveMD();
-  };
-
-
-  /**
-   * Save markdown to disk as a single file.
-   *
-   * @returns {Promise} Empty promise that resolves when done saving.
-   */
-  function saveMD() {
-
-    return new Promise((resolve, reject) => {
-
-      fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
-
-        if (err) throw err;
-
-        pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
-
-          if (err) throw err;
-
-          fs.writeFile(autoSavePath, result, (err) => {
-
-            if (err) throw err;
-
-            notify(`Saved Markdown to ${autoSavePath}!`);
-
-            resolve();
-          });
-        });
-      });
-    });
+    saveMarkdown()
   }
-}
 
+}
 
 /**
- * These are actually browser APIs
+ * @param pixels The amount of pixels to set the font
+ * size to.
  */
-function makeCommands() {
+function changeFontSize(pixels) {
 
-  const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
-
-  commands.forEach((command) => {
-
-    document.getElementById(command).onclick = () => {
-
-      document.execCommand(command);
-    };
-  });
+  editor.style.fontSize = `${pixels}px`
 }
-
 
 /**
  * Make links do things
@@ -219,41 +211,40 @@ function makeLinks() {
 
   setTimeout(() => {
 
-    let links = document.getElementsByTagName('a');
+    let links = document.getElementsByTagName('a')
 
     // collect all the links and link them together
     Array.prototype.forEach.call(links, (link) => {
 
       link.onclick = (event) => {
 
-        event.preventDefault();
+        event.preventDefault()
 
-        const href = event.target.href;
-        const filePath = path.parse(href);
-        let folderPath = path.parse(filePath.dir);
+        const href = event.target.href
+        const filePath = path.parse(href)
+        let folderPath = path.parse(filePath.dir)
 
         if (folderPath == 'markup') {
 
-          folderPath = '';
+          folderPath = ''
         }
 
         if (filePath.ext === '.md') {
 
           fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
 
-            if (err) throw err;
+            if (err) throw err
 
-            editor.innerHTML = md.render(data.toString());
-          });
+            editor.innerHTML = md.render(data.toString())
+          })
 
         } else if (href.startsWith('http')) {
 
         }
-      };
-    });
-  }, 3000);
+      }
+    })
+  }, 3000)
 }
-
 
 /**
  * Get the current editor's contents and add them
@@ -269,15 +260,14 @@ function getEditorContents() {
 
         if (element.nodeName === '#text') {
 
-          return;
+          return
         }
 
-        elements.push(element);
-      });
+        elements.push(element)
+      })
     }
-  }, 3000);
+  }, 3000)
 }
-
 
 /**
  * Uses Electron and the HTML5 Notification APIs to create a
@@ -290,11 +280,11 @@ function notify(message) {
   const notification = new Notification('Markup', {
 
     body: message
-  });
+  })
 
   notification.onclick = () => {
 
-    alert(`Clicked on ${message}!`);
-  };
+    alert(`Clicked on ${message}!`)
+  }
 
 }
