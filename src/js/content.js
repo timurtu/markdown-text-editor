@@ -261,6 +261,6 @@ function notify(message) {
     notification.onclick = () => {
 
         alert(`Clicked on ${message}!`);
-    }
+    };
 
 }
