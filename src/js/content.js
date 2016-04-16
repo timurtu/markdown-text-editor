@@ -1,4 +1,5 @@
-import {clipboard} from 'electron';
+import {clipboard, remote} from 'electron';
+const dialog = remote.dialog;
 
 import fs from 'fs';
 import path from 'path';
@@ -145,7 +146,7 @@ document.getElementById('copy').addEventListener('click', () => {
 
             clipboard.writeText(data.toString());
 
-            toast('Copied!');
+            notify('Copied!');
         });
 
     });
@@ -156,11 +157,24 @@ document.getElementById('copy').addEventListener('click', () => {
  */
 function getContents() {
 
-    if (editor.hasChildNodes()) {
+    setTimeout(() => {
 
-        elements = editor.childNodes;
-        console.log(elements);
-    }
+        if (editor.hasChildNodes()) {
+
+            elements = editor.childNodes;
+
+            Array.prototype.forEach.call(elements, (element) => {
+
+                if(element.nodeName == '#text') {
+                    return;
+                }
+
+                console.log(element);
+            });
+
+        }
+    }, 3000);
+
 }
 
 /**
@@ -223,7 +237,7 @@ function saveMD() {
 
                     if (err) throw err;
 
-                    toast('Saved!');
+                    notify('Saved!');
 
                     resolve();
                 });
@@ -263,7 +277,7 @@ document.getElementById('switch').addEventListener('click', () => {
 });
 
 
-function toast(message) {
+function notify(message) {
 
     toaster.textContent = message;
 
