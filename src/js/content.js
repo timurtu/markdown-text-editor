@@ -26,39 +26,33 @@ let elements = [];
  */
 let md = new Remarkable({
 
-    highlight: (str, lang) => {
+  highlight: (str, lang) => {
 
-        if (lang && hljs.getLanguage(lang)) {
+    if (lang && hljs.getLanguage(lang)) {
 
-            try {
+      try {
 
-                return hljs.highlight(lang, str).value;
+        return hljs.highlight(lang, str).value;
 
-            } catch (err) {
-                console.log(`highlight.js error - ${err}`);
-            }
-        }
-
-        try {
-
-            return hljs.highlightAuto(str).value;
-
-        } catch (err) {
-
-            console.log(`highlight.js error - ${err}`);
-        }
-
-        return ''; // use external default escaping
+      } catch (err) {
+        console.log(`highlight.js error - ${err}`);
+      }
     }
+
+    try {
+
+      return hljs.highlightAuto(str).value;
+
+    } catch (err) {
+
+      console.log(`highlight.js error - ${err}`);
+    }
+
+    return ''; // use external default escaping
+  }
 });
 
 init();
-
-makeLinks();
-
-makeToolbarButtons();
-
-getEditorContents();
 
 
 /**
@@ -67,23 +61,29 @@ getEditorContents();
  */
 function init() {
 
-    if (fs.existsSync(autoSavePath)) {
+  if (fs.existsSync(autoSavePath)) {
 
-        fs.access(autoSavePath, fs.R_OK | fs.W_OK, (err) => {
+    fs.access(autoSavePath, fs.R_OK | fs.W_OK, (err) => {
 
-            if (err) throw err;
+      if (err) throw err;
 
-            fs.readFile(autoSavePath, (err, mdcontent) => {
+      fs.readFile(autoSavePath, (err, mdcontent) => {
 
-                if (err) throw err;
+        if (err) throw err;
 
-                // Syntax Highlighting
-                hljs.initHighlightingOnLoad();
+        // Syntax Highlighting
+        hljs.initHighlightingOnLoad();
 
-                renderMD(mdcontent.toString());
-            });
-        });
-    }
+        renderMD(mdcontent.toString());
+
+        makeLinks();
+
+        makeToolbarButtons();
+
+        getEditorContents();
+      });
+    });
+  }
 }
 
 
@@ -94,7 +94,7 @@ function init() {
  */
 function renderMD(markdown) {
 
-    editor.innerHTML += md.render(markdown);
+  editor.innerHTML += md.render(markdown);
 }
 
 
@@ -103,95 +103,95 @@ function renderMD(markdown) {
  */
 function makeToolbarButtons() {
 
-    makeCommands();
+  makeCommands();
 
-    // Copy all markdown to clipboard
-    document.getElementById('copy').onclick = () => {
+  // Copy all markdown to clipboard
+  document.getElementById('copy').onclick = () => {
 
-        saveMD().then(() => {
+    saveMD().then(() => {
 
-            fs.readFile(autoSavePath, (err, data) => {
+      fs.readFile(autoSavePath, (err, data) => {
 
-                if (err) throw err;
+        if (err) throw err;
 
-                clipboard.writeText(data.toString());
+        clipboard.writeText(data.toString());
 
-                notify('Copied all Markdown contents to clipboard!');
-            });
-        });
-    };
+        notify('Copied all Markdown contents to clipboard!');
+      });
+    });
+  };
 
-    /**
-     * Raise the font size by two pixels
-     */
-    document.getElementById('font-up').onclick = () => {
+  /**
+   * Raise the font size by two pixels
+   */
+  document.getElementById('font-up').onclick = () => {
 
-        if (currentFontSize < maxFontSize) {
+    if (currentFontSize < maxFontSize) {
 
-            changeFontSize(currentFontSize += 2);
-        }
-    };
-
-    /**
-     * Lower the font size by two pixels
-     */
-    document.getElementById('font-down').onclick = () => {
-
-        if (currentFontSize > minFontSize) {
-
-            changeFontSize(currentFontSize -= 2);
-        }
-    };
-
-    /**
-     * @param pixels The amount of pixels to set the font
-     * size to.
-     */
-    function changeFontSize(pixels) {
-
-        editor.style.fontSize = `${pixels}px`;
+      changeFontSize(currentFontSize += 2);
     }
+  };
 
-    /**
-     *  Dangerously take the html from our editable DOM node
-     *  and convert it to markdown. Then save it to our autosavePath
-     *  file.
-     */
-    document.getElementById('save').onclick = () => {
+  /**
+   * Lower the font size by two pixels
+   */
+  document.getElementById('font-down').onclick = () => {
 
-        saveMD();
-    };
+    if (currentFontSize > minFontSize) {
 
-
-    /**
-     * Save markdown to disk as a single file.
-     *
-     * @returns {Promise} Empty promise that resolves when done saving.
-     */
-    function saveMD() {
-
-        return new Promise((resolve, reject) => {
-
-            fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
-
-                if (err) throw err;
-
-                pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
-
-                    if (err) throw err;
-
-                    fs.writeFile(autoSavePath, result, (err) => {
-
-                        if (err) throw err;
-
-                        notify(`Saved Markdown to ${autoSavePath}!`);
-
-                        resolve();
-                    });
-                });
-            });
-        });
+      changeFontSize(currentFontSize -= 2);
     }
+  };
+
+  /**
+   * @param pixels The amount of pixels to set the font
+   * size to.
+   */
+  function changeFontSize(pixels) {
+
+    editor.style.fontSize = `${pixels}px`;
+  }
+
+  /**
+   *  Dangerously take the html from our editable DOM node
+   *  and convert it to markdown. Then save it to our autosavePath
+   *  file.
+   */
+  document.getElementById('save').onclick = () => {
+
+    saveMD();
+  };
+
+
+  /**
+   * Save markdown to disk as a single file.
+   *
+   * @returns {Promise} Empty promise that resolves when done saving.
+   */
+  function saveMD() {
+
+    return new Promise((resolve, reject) => {
+
+      fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
+
+        if (err) throw err;
+
+        pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+
+          if (err) throw err;
+
+          fs.writeFile(autoSavePath, result, (err) => {
+
+            if (err) throw err;
+
+            notify(`Saved Markdown to ${autoSavePath}!`);
+
+            resolve();
+          });
+        });
+      });
+    });
+  }
 }
 
 
@@ -200,15 +200,15 @@ function makeToolbarButtons() {
  */
 function makeCommands() {
 
-    const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
+  const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
 
-    commands.forEach((command) => {
+  commands.forEach((command) => {
 
-        document.getElementById(command).onclick = () => {
+    document.getElementById(command).onclick = () => {
 
-            document.execCommand(command);
-        };
-    });
+      document.execCommand(command);
+    };
+  });
 }
 
 
@@ -217,41 +217,41 @@ function makeCommands() {
  */
 function makeLinks() {
 
-    setTimeout(() => {
+  setTimeout(() => {
 
-        let links = document.getElementsByTagName('a');
+    let links = document.getElementsByTagName('a');
 
-        // collect all the links and link them together
-        Array.prototype.forEach.call(links, (link) => {
+    // collect all the links and link them together
+    Array.prototype.forEach.call(links, (link) => {
 
-            link.onclick = (event) => {
+      link.onclick = (event) => {
 
-                event.preventDefault();
+        event.preventDefault();
 
-                const href = event.target.href;
-                const filePath = path.parse(href);
-                let folderPath = path.parse(filePath.dir);
+        const href = event.target.href;
+        const filePath = path.parse(href);
+        let folderPath = path.parse(filePath.dir);
 
-                if (folderPath == 'markup') {
+        if (folderPath == 'markup') {
 
-                    folderPath = '';
-                }
+          folderPath = '';
+        }
 
-                if (filePath.ext === '.md') {
+        if (filePath.ext === '.md') {
 
-                    fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
+          fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
 
-                        if (err) throw err;
+            if (err) throw err;
 
-                        editor.innerHTML = md.render(data.toString());
-                    });
+            editor.innerHTML = md.render(data.toString());
+          });
 
-                } else if (href.startsWith('http')) {
+        } else if (href.startsWith('http')) {
 
-                }
-            };
-        });
-    }, 3000);
+        }
+      };
+    });
+  }, 3000);
 }
 
 
@@ -261,21 +261,21 @@ function makeLinks() {
  */
 function getEditorContents() {
 
-    setTimeout(() => {
+  setTimeout(() => {
 
-        if (editor.hasChildNodes()) {
+    if (editor.hasChildNodes()) {
 
-            Array.prototype.forEach.call(editor.childNodes, (element) => {
+      Array.prototype.forEach.call(editor.childNodes, (element) => {
 
-                if (element.nodeName === '#text') {
+        if (element.nodeName === '#text') {
 
-                    return;
-                }
-
-                elements.push(element);
-            });
+          return;
         }
-    }, 3000);
+
+        elements.push(element);
+      });
+    }
+  }, 3000);
 }
 
 
@@ -287,14 +287,14 @@ function getEditorContents() {
  */
 function notify(message) {
 
-    const notification = new Notification('Markup', {
+  const notification = new Notification('Markup', {
 
-        body: message
-    });
+    body: message
+  });
 
-    notification.onclick = () => {
+  notification.onclick = () => {
 
-        alert(`Clicked on ${message}!`);
-    };
+    alert(`Clicked on ${message}!`);
+  };
 
 }
