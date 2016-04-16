@@ -10,14 +10,13 @@
     "electron": "electron main.js",
     "watch": "gulp watch",
     "build": "gulp build",
-    "lint": "node_modules/jshint/bin/jshint --verbose --reporter=node_modules/jshint-stylish src",
+    "lint": "node_modules/jshint/bin/jshint --verbose --show-non-errors --reporter=node_modules/jshint-stylish src",
     "package": "electron-packager ./ markup --platform=all --arch=x64 --version=0.37.5"
   },
   "jshintConfig": {
     "esversion": 6,
     "asi": true
   },
-  "homepage": "https://github.com/timurtu/markdown-text-editor#readme",
   "dependencies": {
     "github-markdown-css": "^2.2.1",
     "highlight.js": "^9.3.0",
@@ -38,18 +37,19 @@
     "npm-run-all": "^1.7.0",
     "rimraf": "^2.5.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/timurtu/markup.git"
-  },
   "keywords": [
     "markdown",
     "text",
     "desktop"
   ],
   "author": "Timur Uzel <timurt.uzel@gmail.com>",
-  "license": "ISC",
+  "homepage": "https://github.com/timurtu/markdown-text-editor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timurtu/markup.git"
+  },
   "bugs": {
-    "url": "https://github.com/timurtu/markdown-text-editor/issues"
-  }
+  "url": "https://github.com/timurtu/markdown-text-editor/issues"
+},
+  "license": "ISC"
 }
