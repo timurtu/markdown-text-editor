@@ -9,7 +9,6 @@ import {clipboard} from 'electron';
 const editor = document.getElementById('markdown-text');
 const toaster = document.getElementById('toaster');
 const saveButton = document.getElementById('save');
-const loadingBar = document.getElementById('loading-bar');
 const autosavePath = './docs/autosave.md';
 const docsPath = './docs/';
 
@@ -39,6 +38,8 @@ let md = new Remarkable({
 });
 
 init();
+makeLinks();
+
 
 /**
  *  Read from an autosaved markdown file and convert it to
@@ -67,53 +68,45 @@ function renderMD(markdown) {
     editor.innerHTML += md.render(markdown);
 }
 
-document.getElementById('make-bold').addEventListener('click', () => {
-    document.execCommand('bold');
-});
+// These are actually browser APIs
+const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
 
-document.getElementById('emphasize').addEventListener('click', () => {
-    document.execCommand('italic');
-});
-
-document.getElementById('under-line').addEventListener('click', () => {
-    document.execCommand('underline');
-});
-
-document.getElementById('strike-through').addEventListener('click', () => {
-    document.execCommand('strikeThrough');
+commands.forEach((command) => {
+    document.getElementById(command).addEventListener('click', () => {
+        document.execCommand(command);
+    });
 });
 
 // Make links do things
-var links = document.getElementsByTagName('a');
-// collect all the links first
-setTimeout(() => {
-    // Then link them together
-    Array.prototype.forEach.call(links, (link) => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const filePath = path.parse(event.target.href);
-            // console.log(filePath);
-            let folderPath = path.parse(filePath.dir);
-            // console.log(folderPath);
-            if (folderPath == 'markup')
-                folderPath = '';
-            if (filePath.ext === '.md') {
-                fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
-                    if (err) throw err;
-                    editor.innerHTML = md.render(data.toString());
-                });
-            } else if (event.target.href.startsWith('http')) {
-                // window.open(event.target.href);
-                // const webview = document.getElementById('webview');
-                // webview.setAttribute('src', event.target.href);
-                // webview.addEventListener('click', () => {
-                //     init();
-                // });
-            }
+function makeLinks() {
+    setInterval(() => {
+        // collect all the links and link them together
+        Array.prototype.forEach.call(document.getElementsByTagName('a'), (link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const filePath = path.parse(event.target.href);
+                // console.log(filePath);
+                let folderPath = path.parse(filePath.dir);
+                // console.log(folderPath);
+                if (folderPath == 'markup')
+                    folderPath = '';
+                if (filePath.ext === '.md') {
+                    fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
+                        if (err) throw err;
+                        editor.innerHTML = md.render(data.toString());
+                    });
+                } else if (event.target.href.startsWith('http')) {
+                    // window.open(event.target.href);
+                    // const webview = document.getElementById('webview');
+                    // webview.setAttribute('src', event.target.href);
+                    // webview.addEventListener('click', () => {
+                    //     init();
+                    // });
+                }
+            });
         });
-    });
-}, 3000);
-
+    }, 1000);
+}
 
 // Copy all markdown to clipboard
 document.getElementById('copy').addEventListener('click', () => {
