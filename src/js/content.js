@@ -1,23 +1,29 @@
-import fs from 'fs';
-import path from 'path';
-import pandoc from 'pdc';
-import Remarkable from 'remarkable';
-import hljs from 'highlight.js';
 import {clipboard} from 'electron';
 
+import fs from 'fs';
+import path from 'path';
 
-const editor = document.getElementById('markdown-text');
-const toaster = document.getElementById('toaster');
-const saveButton = document.getElementById('save');
+import Remarkable from 'remarkable';
+import hljs from 'highlight.js';
+import pandoc from 'pdc';
+
+// Paths for getting and saving markdown files
 const autosavePath = './docs/autosave.md';
 const docsPath = './docs/';
+
+// Toolbar buttons
+const editor = document.getElementById('markdown-text'); // Editable DOM node for markdown content
+const toaster = document.getElementById('toaster');
+const saveButton = document.getElementById('save');
 
 let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
 
 let isHtml = true;
+
 let elements;
+
 let md = new Remarkable({
     highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
@@ -38,6 +44,7 @@ let md = new Remarkable({
 });
 
 init();
+
 makeLinks();
 
 
@@ -52,68 +59,90 @@ function init() {
         fs.access(autosavePath, fs.R_OK | fs.W_OK, (err) => {
 
             if (err) throw err;
+
             fs.readFile(autosavePath, (err, mdcontent) => {
+
                 if (err) throw err;
+
+                // Syntax Highlighting
                 hljs.initHighlightingOnLoad();
+
                 renderMD(mdcontent.toString());
             });
-
         });
     }
 
 }
 
-// Dangerously render markdown to html
 function renderMD(markdown) {
+
+    // Dangerously render markdown to html
     editor.innerHTML += md.render(markdown);
 }
 
-// These are actually browser APIs
 const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
 
 commands.forEach((command) => {
+
     document.getElementById(command).addEventListener('click', () => {
+
+        // These are actually browser APIs
         document.execCommand(command);
     });
 });
 
 // Make links do things
 function makeLinks() {
-    setInterval(() => {
+
+    setTimeout(() => {
+
+        let links = document.getElementsByTagName('a');
+
+
         // collect all the links and link them together
-        Array.prototype.forEach.call(document.getElementsByTagName('a'), (link) => {
+        Array.prototype.forEach.call(links, (link) => {
+
             link.addEventListener('click', (event) => {
+
                 event.preventDefault();
-                const filePath = path.parse(event.target.href);
-                // console.log(filePath);
+
+                const href = event.target.href;
+                const filePath = path.parse(href);
                 let folderPath = path.parse(filePath.dir);
-                // console.log(folderPath);
-                if (folderPath == 'markup')
+
+                if (folderPath == 'markup') {
+
                     folderPath = '';
+                }
+
                 if (filePath.ext === '.md') {
+
                     fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
+
                         if (err) throw err;
+
                         editor.innerHTML = md.render(data.toString());
                     });
-                } else if (event.target.href.startsWith('http')) {
-                    // window.open(event.target.href);
-                    // const webview = document.getElementById('webview');
-                    // webview.setAttribute('src', event.target.href);
-                    // webview.addEventListener('click', () => {
-                    //     init();
-                    // });
+
+                } else if (href.startsWith('http')) {
+
                 }
             });
         });
-    }, 1000);
+    }, 3000);
 }
 
 // Copy all markdown to clipboard
 document.getElementById('copy').addEventListener('click', () => {
+
     saveMD().then(function () {
+
         fs.readFile(autosavePath, (err, data) => {
+
             if (err) throw err;
+
             clipboard.writeText(data.toString());
+
             toast('Copied!');
         });
 
@@ -124,7 +153,9 @@ document.getElementById('copy').addEventListener('click', () => {
  * Get the current editor's contents as a list of nodes
  */
 function getContents() {
+
     if (editor.hasChildNodes()) {
+
         elements = editor.childNodes;
         console.log(elements);
     }
@@ -134,7 +165,9 @@ function getContents() {
  * Raise the font size by two pixels
  */
 document.getElementById('font-up').addEventListener('click', () => {
+
     if (currentFontSize < maxFontSize) {
+
         changeFontSize(currentFontSize += 2);
     }
 });
@@ -143,7 +176,9 @@ document.getElementById('font-up').addEventListener('click', () => {
  * Lower the font size by two pixels
  */
 document.getElementById('font-down').addEventListener('click', () => {
+
     if (currentFontSize > minFontSize) {
+
         changeFontSize(currentFontSize -= 2);
     }
 });
@@ -153,6 +188,7 @@ document.getElementById('font-down').addEventListener('click', () => {
  * size to.
  */
 function changeFontSize(pixels) {
+
     editor.style.fontSize = `${pixels}px`;
 }
 
@@ -162,6 +198,7 @@ function changeFontSize(pixels) {
  *  file.
  */
 saveButton.addEventListener('click', () => {
+
     saveMD();
 });
 
@@ -169,14 +206,23 @@ saveButton.addEventListener('click', () => {
  * Save markdown to disk as a single file.
  */
 function saveMD() {
+
     return new Promise((resolve, reject) => {
+
         fs.access(path.join(autosavePath), fs.W_OK | fs.R_OK, (err) => {
+
             if (err) throw err;
+
             pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+
                 if (err) throw err;
+
                 fs.writeFile(autosavePath, result, (err) => {
+
                     if (err) throw err;
+
                     toast('Saved!');
+
                     resolve();
                 });
             });
@@ -192,15 +238,23 @@ document.getElementById('switch').addEventListener('click', () => {
          * set it to the DOM.
          */
         fs.readFile(autosavePath, (err, data) => {
+
             if (err) throw err;
+
             editor.innerHTML = `<pre>${data.toString()}</pre>`;
+
             saveButton.style.display = 'none';
         });
+
+        // Don't let the user edit markdown directly because that's not what this app is for
         editor.setAttribute('contenteditable', 'false');
         isHtml = false;
     } else {
+
         init();
+
         saveButton.style.display = 'inline';
+
         editor.setAttribute('contenteditable', 'true');
         isHtml = true;
     }
@@ -208,8 +262,12 @@ document.getElementById('switch').addEventListener('click', () => {
 
 
 function toast(message) {
+
     toaster.textContent = message;
+
     setTimeout(() => {
+
         toaster.textContent = '';
+
     }, 2000);
 }
