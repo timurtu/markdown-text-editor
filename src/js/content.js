@@ -20,7 +20,7 @@ let currentFontSize = 16;
 const maxFontSize = 40;
 const minFontSize = 12;
 
-let isHtml = true;
+let isMarkdown = false;
 
 let elements;
 
@@ -46,6 +46,8 @@ let md = new Remarkable({
 init();
 
 makeLinks();
+
+getContents();
 
 
 /**
@@ -231,7 +233,7 @@ function saveMD() {
 }
 
 document.getElementById('switch').addEventListener('click', () => {
-    if (isHtml) {
+    if (!isMarkdown) {
 
         /**
          * Read from the autosaved markdown file and dangerously
@@ -248,7 +250,7 @@ document.getElementById('switch').addEventListener('click', () => {
 
         // Don't let the user edit markdown directly because that's not what this app is for
         editor.setAttribute('contenteditable', 'false');
-        isHtml = false;
+        isMarkdown = true;
     } else {
 
         init();
@@ -256,7 +258,7 @@ document.getElementById('switch').addEventListener('click', () => {
         saveButton.style.display = 'inline';
 
         editor.setAttribute('contenteditable', 'true');
-        isHtml = true;
+        isMarkdown = false;
     }
 });
 
