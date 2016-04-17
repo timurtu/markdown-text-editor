@@ -14,7 +14,7 @@ Below is an example of creating a menu dynamically in a web page
 the user right clicks the page:
 
 ```html
-<!-- index.html -->
+<!--editor.html-->
 <script>
 const remote = require('electron').remote;
 const Menu = remote.Menu;

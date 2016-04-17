@@ -1,12 +1,11 @@
 import {clipboard, remote} from 'electron'
-const dialog = remote.dialog
 
 import fs from 'fs'
 import path from 'path'
 
 import Remarkable from 'remarkable'
+import toMarkdown from 'to-markdown';
 import hljs from 'highlight.js'
-import pandoc from 'pdc'
 
 // Paths for getting and saving markdown files
 const autoSavePath = './docs/autosave.md'
@@ -20,6 +19,7 @@ const maxFontSize = 40
 const minFontSize = 12
 
 let elements = []
+
 
 /**
  * Create a markdown renderer with syntax highlighting.
@@ -119,20 +119,15 @@ function saveMarkdown() {
 
     fs.access(path.join(autoSavePath), fs.W_OK | fs.R_OK, (err) => {
 
-      if (err) throw err
+      if (err) reject(err)
 
-      pandoc(editor.innerHTML, 'html', 'markdown', function (err, result) {
+      fs.writeFile(autoSavePath, toMarkdown(editor.innerHTML), (err) => {
 
-        if (err) throw err
+        if (err) reject(err)
 
-        fs.writeFile(autoSavePath, result, (err) => {
+        notify(`Saved Markdown to ${path.join(__dirname, autoSavePath)}!`)
 
-          if (err) throw err
-
-          notify(`Saved Markdown to ${autoSavePath}!`)
-
-          resolve()
-        })
+        resolve()
       })
     })
   })
@@ -148,17 +143,9 @@ function makeToolbarButtons() {
   // Copy all markdown to clipboard
   document.getElementById('copy').onclick = () => {
 
-    saveMarkdown().then(() => {
+    clipboard.writeText(toMarkdown(editor.innerHTML))
 
-      fs.readFile(autoSavePath, (err, data) => {
-
-        if (err) throw err
-
-        clipboard.writeText(data.toString())
-
-        notify('Copied all Markdown contents to clipboard!')
-      })
-    })
+    notify('Copied all Markdown contents to clipboard!')
   }
 
   /**

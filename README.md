@@ -6,8 +6,6 @@
 
 ## Install
 
-### You must have [Pandoc](http://pandoc.org/ "Pandoc's website") installed.
-
 - Clone or Fork this repo
 - `cd` into it
 - `npm install && npm start`

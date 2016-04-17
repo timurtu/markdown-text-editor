@@ -503,7 +503,7 @@ win = new BrowserWindow(browserOptions);
 
 // Navigate.
 if (browserOptions.transparent) {
-  win.loadURL('file://' + __dirname + '/index.html');
+  win.loadURL('file://' + __dirname + editor.html);
 } else {
   // No transparency, so we load a fallback that uses basic styles.
   win.loadURL('file://' + __dirname + '/fallback.html');
