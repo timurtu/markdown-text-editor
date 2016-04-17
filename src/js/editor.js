@@ -72,13 +72,57 @@ function init() {
 
         renderMarkdown(mdcontent.toString())
 
-        makeLinks()
+        interceptClicks()
 
         makeToolbarButtons()
 
         getEditorContents()
       })
     })
+  }
+}
+
+/**
+ * Smarter way to handle events
+ */
+function interceptClicks() {
+
+
+  document.body.onclick = (event) => {
+
+    const element = event.target;
+
+    /**
+     * Handle link behavior
+     */
+    if(element.href) {
+      event.preventDefault()
+
+      const href = element.href
+      const filePath = path.parse(href)
+      let folderPath = path.parse(filePath.dir)
+
+      if (folderPath == 'markup') {
+
+        folderPath = ''
+      }
+
+      if (filePath.ext === '.md') {
+
+        fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
+
+          if (err) throw err
+
+          editor.innerHTML = md.render(data.toString())
+        })
+
+      } else if (href.startsWith('http')) {
+
+      }
+    }
+
+    console.log(element);
+
   }
 }
 
@@ -189,48 +233,6 @@ function makeToolbarButtons() {
 function changeFontSize(pixels) {
 
   editor.style.fontSize = `${pixels}px`
-}
-
-/**
- * Make links do things
- */
-function makeLinks() {
-
-  setTimeout(() => {
-
-    let links = document.getElementsByTagName('a')
-
-    // collect all the links and link them together
-    Array.prototype.forEach.call(links, (link) => {
-
-      link.onclick = (event) => {
-
-        event.preventDefault()
-
-        const href = event.target.href
-        const filePath = path.parse(href)
-        let folderPath = path.parse(filePath.dir)
-
-        if (folderPath == 'markup') {
-
-          folderPath = ''
-        }
-
-        if (filePath.ext === '.md') {
-
-          fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
-
-            if (err) throw err
-
-            editor.innerHTML = md.render(data.toString())
-          })
-
-        } else if (href.startsWith('http')) {
-
-        }
-      }
-    })
-  }, 3000)
 }
 
 /**
