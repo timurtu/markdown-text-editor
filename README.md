@@ -4,7 +4,7 @@
 
  [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot3.png "Markup Screenshot"
 
-## Install
+## Building Locally
 
 - Clone or Fork this repo
 - `cd` into it
