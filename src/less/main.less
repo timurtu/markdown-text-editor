@@ -1,14 +1,13 @@
-$font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji",
-"Segoe UI Emoji", "Segoe UI Symbol";
-$bg: #FFF088;
+@font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@bg: #FFF088;
 
 /*************
   General
 *************/
 
 body {
-  background-color: $bg;
-  font-family: $font-family;
+  background-color: @bg;
+  font-family: @font-family;
 }
 
 /*************
@@ -49,7 +48,7 @@ body {
 
 #markdown-text {
   margin-top: 60px;
-  font-family: $font-family;
+  font-family: @font-family;
   font-size: 16px;
   line-height: 1.6;
   padding: 0 .75em;
@@ -76,15 +75,4 @@ body {
     background-color: #000;
   }
 
-}
-
-/*************
-  Bottom bar
-*************/
-
-#bottom-bar {
-  position: fixed;
-  bottom: 0;
-  background: black;
-  height: 20px;
 }

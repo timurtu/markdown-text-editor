@@ -90,38 +90,45 @@ function interceptClicks() {
 
   document.body.onclick = (event) => {
 
+    event.preventDefault()
+
     const element = event.target;
 
     /**
      * Handle link behavior
      */
     if(element.href) {
-      event.preventDefault()
 
-      const href = element.href
-      const filePath = path.parse(href)
-      let folderPath = path.parse(filePath.dir)
-
-      if (folderPath == 'markup') {
-
-        folderPath = ''
-      }
-
-      if (filePath.ext === '.md') {
-
-        fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
-
-          if (err) throw err
-
-          editor.innerHTML = md.render(data.toString())
-        })
-
-      } else if (href.startsWith('http')) {
-
-      }
+      handleLink(element);
+    } else {
+      console.log(element);
     }
 
-    console.log(element);
+  }
+}
+
+function handleLink(element) {
+
+
+  const href = element.href
+  const filePath = path.parse(href)
+  let folderPath = path.parse(filePath.dir)
+
+  if (folderPath == 'markup') {
+
+    folderPath = ''
+  }
+
+  if (filePath.ext === '.md') {
+
+    fs.readFile(path.join(docsPath, folderPath.base, filePath.base), (err, data) => {
+
+      if (err) throw err
+
+      editor.innerHTML = md.render(data.toString())
+    })
+
+  } else if (href.startsWith('http')) {
 
   }
 }
