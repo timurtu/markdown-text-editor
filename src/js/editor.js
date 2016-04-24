@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import Remarkable from 'remarkable'
-import toMarkdown from 'to-markdown';
+import toMarkdown from 'to-markdown'
 import hljs from 'highlight.js'
 
 // Paths for getting and saving markdown files
@@ -14,9 +14,6 @@ const docsPath = './docs/'
 // Editable DOM node for markdown content
 const editor = document.getElementById('markdown-text')
 
-let currentFontSize = 16
-const maxFontSize = 40
-const minFontSize = 12
 
 let elements = []
 
@@ -47,9 +44,9 @@ let md = new Remarkable({
   }
 })
 
+
 init()
 
-makeCommands()
 
 /**
  *  Read from an autosaved markdown file and convert it to
@@ -74,7 +71,7 @@ function init() {
 
         interceptClicks()
 
-        makeToolbarButtons()
+        // makeToolbarButtons()
 
         getEditorContents()
       })
@@ -97,18 +94,17 @@ function interceptClicks() {
     /**
      * Handle link behavior
      */
-    if(element.href) {
+    if (element.href) {
 
       handleLink(element);
     } else {
-      console.log(element);
+      // console.log(element);
     }
 
   }
 }
 
 function handleLink(element) {
-
 
   const href = element.href
   const filePath = path.parse(href)
@@ -134,22 +130,6 @@ function handleLink(element) {
 }
 
 /**
- * These are actually browser APIs
- */
-function makeCommands() {
-
-  const commands = ['bold', 'italic', 'underline', 'strikeThrough']
-
-  commands.forEach((command) => {
-
-    document.getElementById(command).onclick = () => {
-
-      document.execCommand(command)
-    }
-  })
-}
-
-/**
  * Dangerously render markdown to html
  *
  * @param markdown raw markdown string
@@ -157,6 +137,14 @@ function makeCommands() {
 function renderMarkdown(markdown) {
 
   editor.innerHTML += md.render(markdown)
+}
+
+
+function copyAllMarkdown() {
+
+  clipboard.writeText(toMarkdown(editor.innerHTML))
+
+  notify('Copied all Markdown contents to clipboard!')
 }
 
 /**
@@ -184,63 +172,6 @@ function saveMarkdown() {
   })
 }
 
-/**
- * Make toolbar buttons do things
- */
-function makeToolbarButtons() {
-
-  makeCommands()
-
-  // Copy all markdown to clipboard
-  document.getElementById('copy').onclick = () => {
-
-    clipboard.writeText(toMarkdown(editor.innerHTML))
-
-    notify('Copied all Markdown contents to clipboard!')
-  }
-
-  /**
-   * Raise the font size by two pixels
-   */
-  document.getElementById('font-up').onclick = () => {
-
-    if (currentFontSize < maxFontSize) {
-
-      changeFontSize(currentFontSize += 2)
-    }
-  }
-
-  /**
-   * Lower the font size by two pixels
-   */
-  document.getElementById('font-down').onclick = () => {
-
-    if (currentFontSize > minFontSize) {
-
-      changeFontSize(currentFontSize -= 2)
-    }
-  }
-
-  /**
-   *  Dangerously take the html from our editable DOM node
-   *  and convert it to markdown. Then save it to our autosavePath
-   *  file.
-   */
-  document.getElementById('save').onclick = () => {
-
-    saveMarkdown()
-  }
-
-}
-
-/**
- * @param pixels The amount of pixels to set the font
- * size to.
- */
-function changeFontSize(pixels) {
-
-  editor.style.fontSize = `${pixels}px`
-}
 
 /**
  * Get the current editor's contents and add them
