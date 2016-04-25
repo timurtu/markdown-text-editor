@@ -20,7 +20,7 @@
     "highlight.js": "^9.3.0",
     "remarkable": "^1.6.2",
     "to-markdown": "^3.0.0",
-    "toolbarjs": "^2.2.0"
+    "toolbarjs": "^2.4.16"
   },
   "devDependencies": {
     "electron-compilers": "^3.0.0",
