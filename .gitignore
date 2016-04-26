@@ -7,3 +7,6 @@ dist/
 bundle/
 npm-debug.log
 .DS_Store
+markup-dar*
+markup-win32*
+markup-lin*

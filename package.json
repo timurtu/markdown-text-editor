@@ -7,7 +7,16 @@
     "start": "npm-run-all --parallel electron lint",
     "electron": "electron main.js",
     "lint": "node_modules/jshint/bin/jshint --verbose --reporter=node_modules/jshint-stylish src",
-    "package": "electron-packager ./ markup --platform=all --arch=x64 --version=0.37.5"
+    "package": "npm-run-all --parallel package-win package-lin package-mac package-mas",
+    "package-win": "electron-packager main.js markup --platform=win32 --arch=all --version=0.37.7 --overwrite",
+    "package-lin": "electron-packager main.js markup --platform=linux --arch=all --version=0.37.7 --overwrite",
+    "package-mac": "electron-packager app.asar markup --platform=darwin --arch=x64 --version=0.37.7 --icon=res/markup-icon.png.icns --overwrite",
+    "package-mas":"electron-packager main.js markup --platform=mas --arch=x64 --version=0.37.7 --icon=res/markup-icon.png.icns --overwrite"
+  },
+  "build": {
+    "app-bundle-id": "markup",
+    "app-category-type": "markdown.text.editor",
+    "iconUrl": "res/markup-icon.png"
   },
   "jshintConfig": {
     "esversion": 6,
