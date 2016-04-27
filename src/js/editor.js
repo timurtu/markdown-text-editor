@@ -106,6 +106,12 @@ function interceptClicks() {
 
 }
 
+// Prevent double click hack
+document.body.ondblclick = event => {
+  event.stopPropagation()
+  enterEditMode(event.target)
+}
+
 /**
  * You are now editing element
  * @param element
