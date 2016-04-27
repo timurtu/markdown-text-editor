@@ -8,6 +8,10 @@
 body {
   background-color: @bg;
   font-family: @font-family;
+
+  &:hover {
+    cursor: default;
+  }
 }
 
 /*************
@@ -47,19 +51,18 @@ body {
 *************/
 
 #markdown-text {
-  margin-top: 60px;
+
+  position: relative;
+  top: 60px;
   font-family: @font-family;
   font-size: 16px;
   line-height: 1.6;
   padding: 0 .75em;
   outline: none;
+  cursor: text;
 
   h1, h2 {
     border-bottom: 1px solid #2F2D2D;
-  }
-
-  &:hover {
-    cursor: text;
   }
 
   a:hover {
@@ -75,4 +78,24 @@ body {
     background-color: #000;
   }
 
+}
+
+.selected {
+  border: 5px solid #ECDB5F;
+  border-radius: 5px;
+  padding: 0 4px 2px 4px;
+  transition: .5s ease all;
+  background: rgb(255, 247, 192);
+
+  &:hover {
+    cursor: text;
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
+}
+
+.not-selected {
+  transition: .5s ease all;
 }
