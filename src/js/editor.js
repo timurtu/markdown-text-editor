@@ -118,8 +118,11 @@ document.body.ondblclick = event => {
  */
 function enterEditMode(element) {
 
-
-  element.className = 'selected'
+  if(element.classList.contains('not-selected')) {
+    element.classList.remove('not-selected')
+  }
+  
+  element.classList.add('selected')
 
   console.log(element);
 

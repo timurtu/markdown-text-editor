@@ -11,7 +11,7 @@
     "package-win": "electron-packager main.js markup --platform=win32 --arch=all --version=0.37.7 --overwrite",
     "package-lin": "electron-packager main.js markup --platform=linux --arch=all --version=0.37.7 --overwrite",
     "package-mac": "electron-packager app.asar markup --platform=darwin --arch=x64 --version=0.37.7 --icon=res/markup-icon.png.icns --overwrite",
-    "package-mas":"electron-packager main.js markup --platform=mas --arch=x64 --version=0.37.7 --icon=res/markup-icon.png.icns --overwrite"
+    "package-mas": "electron-packager main.js markup --platform=mas --arch=x64 --version=0.37.7 --icon=res/markup-icon.png.icns --overwrite"
   },
   "build": {
     "app-bundle-id": "markup",
@@ -27,6 +27,7 @@
     "font-awesome": "^4.6.1",
     "github-markdown-css": "^2.2.1",
     "highlight.js": "^9.3.0",
+    "kefir": "^3.2.2",
     "remarkable": "^1.6.2",
     "to-markdown": "^3.0.0",
     "toolbarjs": "^2.4.16"
