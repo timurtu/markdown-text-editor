@@ -123,10 +123,10 @@ function enterEditMode(element) {
   const leaveEditMode = event => {
 
     element.classList.remove('selected')
-    document.body.removeEventListener('click', leaveEditMode, false);
+    editor.removeEventListener('click', leaveEditMode, false);
   }
 
-  document.body.addEventListener('click', leaveEditMode, false);
+  editor.addEventListener('click', leaveEditMode, false);
 
 }
 

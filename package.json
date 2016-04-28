@@ -30,7 +30,7 @@
     "kefir": "^3.2.2",
     "remarkable": "^1.6.2",
     "to-markdown": "^3.0.0",
-    "toolbarjs": "^2.4.16"
+    "toolbarjs": "^2.4.17"
   },
   "devDependencies": {
     "electron-compilers": "^3.0.0",
