@@ -71,8 +71,6 @@ function init() {
 
         interceptClicks()
 
-        // makeToolbarButtons()
-
         getEditorContents()
       })
     })
@@ -84,8 +82,7 @@ function init() {
  */
 function interceptClicks() {
 
-
-  document.body.onclick = (event) => {
+  editor.onclick = (event) => {
 
     event.preventDefault()
 
@@ -106,11 +103,6 @@ function interceptClicks() {
 
 }
 
-// Prevent double click hack
-document.body.ondblclick = event => {
-  event.stopPropagation()
-  enterEditMode(event.target)
-}
 
 /**
  * You are now editing element
@@ -118,10 +110,10 @@ document.body.ondblclick = event => {
  */
 function enterEditMode(element) {
 
-  if(element.classList.contains('not-selected')) {
-    element.classList.remove('not-selected')
+  if (element.classList.contains('selected')) {
+    return
   }
-  
+
   element.classList.add('selected')
 
   console.log(element);
@@ -129,8 +121,8 @@ function enterEditMode(element) {
   // TODO - handle clicks in edit mode
 
   const leaveEditMode = event => {
+
     element.classList.remove('selected')
-    element.classList.add('not-selected')
     document.body.removeEventListener('click', leaveEditMode, false);
   }
 
@@ -213,21 +205,18 @@ function saveMarkdown() {
  */
 function getEditorContents() {
 
-  setTimeout(() => {
+  if (editor.hasChildNodes()) {
 
-    if (editor.hasChildNodes()) {
+    Array.prototype.forEach.call(editor.childNodes, (element) => {
 
-      Array.prototype.forEach.call(editor.childNodes, (element) => {
+      if (element.nodeName === '#text') {
 
-        if (element.nodeName === '#text') {
+        return
+      }
 
-          return
-        }
-
-        elements.push(element)
-      })
-    }
-  }, 3000)
+      elements.push(element)
+    })
+  }
 }
 
 /**
