@@ -46,9 +46,7 @@ let buttons = [
   {
     label: '<i class="fa fa-minus"></i>',
     click: event => {
-
       if (currentFontSize > minFontSize) {
-
         changeFontSize(currentFontSize -= 2)
       }
     }
@@ -56,9 +54,7 @@ let buttons = [
   {
     label: '<i class="fa fa-plus"></i>',
     click: event => {
-
       if (currentFontSize < maxFontSize) {
-
         changeFontSize(currentFontSize += 2)
       }
     }
@@ -73,11 +69,8 @@ let buttons = [
 
 let toolbar = toolbarjs(
   'rgba(30, 145, 200, 0.7)',
-
   'top',
-
   buttons
-
 )
 
 /**
@@ -85,6 +78,5 @@ let toolbar = toolbarjs(
  * size to.
  */
 function changeFontSize(pixels) {
-
   editor.style.fontSize = `${pixels}px`
 }

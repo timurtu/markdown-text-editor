@@ -94,39 +94,13 @@ function interceptClicks() {
     if (element.href) {
 
       handleLink(element);
-    } else {
-      // Editing element
-      enterEditMode(element)
+    }
+    else {
+
+      
     }
 
   }
-
-}
-
-
-/**
- * You are now editing element
- * @param element
- */
-function enterEditMode(element) {
-
-  if (element.classList.contains('selected')) {
-    return
-  }
-
-  element.classList.add('selected')
-
-  console.log(element);
-
-  // TODO - handle clicks in edit mode
-
-  const leaveEditMode = event => {
-
-    element.classList.remove('selected')
-    editor.removeEventListener('click', leaveEditMode, false);
-  }
-
-  editor.addEventListener('click', leaveEditMode, false);
 
 }
 
