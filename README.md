@@ -6,6 +6,8 @@
 
 ## Building Locally
 
-- Clone or Fork this repo
-- `cd` into it
-- `npm install && npm start`
+- `git clone https://github.com/timurtu/markup.git`
+- `cd markup`
+- `npm install` to install dependencies
+- `npm start` to start the app
+
