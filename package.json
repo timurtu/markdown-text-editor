@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "description": "Write markdown with a WYSIWYG and get the source.",
   "main": "main.js",
+  "jshintConfig": {
+    "esversion": 6,
+    "curly": true
+  },
+  "eslintConfig": {
+       "env": {
+           "browser": true,
+           "node": true
+       }
+   },
   "scripts": {
     "start": "npm-run-all --parallel electron lint",
     "electron": "electron main.js",

@@ -1,4 +1,6 @@
-import {clipboard, remote} from 'electron'
+import {
+  clipboard
+} from 'electron'
 
 import fs from 'fs'
 import path from 'path'
@@ -13,10 +15,7 @@ const docsPath = './docs/'
 
 // Editable DOM node for markdown content
 const editor = document.getElementById('markdown-text')
-
-
 let elements = []
-
 
 /**
  * Create a markdown renderer with syntax highlighting.
@@ -28,14 +27,16 @@ let md = new Remarkable({
     if (lang && hljs.getLanguage(lang)) {
 
       try {
-        return hljs.highlight(lang, str).value
+        return hljs.highlight(lang, str)
+          .value
       } catch (err) {
         console.log(`highlight.js error - ${err}`)
       }
     }
 
     try {
-      return hljs.highlightAuto(str).value
+      return hljs.highlightAuto(str)
+        .value
     } catch (err) {
       console.log(`highlight.js error - ${err}`)
     }
@@ -44,9 +45,7 @@ let md = new Remarkable({
   }
 })
 
-
 init()
-
 
 /**
  *  Read from an autosaved markdown file and convert it to
@@ -94,10 +93,8 @@ function interceptClicks() {
     if (element.href) {
 
       handleLink(element);
-    }
-    else {
+    } else {
 
-      
     }
 
   }
@@ -139,7 +136,6 @@ function renderMarkdown(markdown) {
   editor.innerHTML += md.render(markdown)
 }
 
-
 function copyAllMarkdown() {
 
   clipboard.writeText(toMarkdown(editor.innerHTML))
@@ -164,14 +160,15 @@ function saveMarkdown() {
 
         if (err) reject(err)
 
-        notify(`Saved Markdown to ${path.join(__dirname, autoSavePath)}!`)
+        notify(
+          `Saved Markdown to ${path.join(__dirname, autoSavePath)}!`
+        )
 
         resolve()
       })
     })
   })
 }
-
 
 /**
  * Get the current editor's contents and add them
