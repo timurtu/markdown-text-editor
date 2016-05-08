@@ -5,14 +5,14 @@
   "main": "main.js",
   "jshintConfig": {
     "esversion": 6,
-    "curly": true
+    "asi": true
   },
   "eslintConfig": {
-       "env": {
-           "browser": true,
-           "node": true
-       }
-   },
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "scripts": {
     "start": "npm-run-all --parallel electron lint",
     "electron": "electron main.js",
@@ -28,10 +28,6 @@
     "app-category-type": "markdown.text.editor",
     "iconUrl": "res/markup-icon.png"
   },
-  "jshintConfig": {
-    "esversion": 6,
-    "asi": true
-  },
   "dependencies": {
     "electron-compile": "^3.0.1",
     "font-awesome": "^4.6.1",
@@ -43,6 +39,7 @@
     "toolbarjs": "^2.4.17"
   },
   "devDependencies": {
+    "babel-runtime": "^6.6.1",
     "electron-compilers": "^3.0.0",
     "electron-prebuilt-compile": "^0.37.6",
     "jshint": "^2.9.1",

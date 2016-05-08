@@ -1,6 +1,4 @@
-import {
-  clipboard
-} from 'electron'
+import { clipboard } from 'electron'
 
 import fs from 'fs'
 import path from 'path'
