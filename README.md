@@ -4,7 +4,7 @@
 
  [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot3.png "Markup Screenshot"
 
-## Building From Source
+## Build From Source
 
 - `git clone https://github.com/timurtu/markup.git --depth 1`
 - `cd markup`
