@@ -57,14 +57,14 @@ function init() {
 
       if (err) throw err
 
-      fs.readFile(autoSavePath, (err, mdcontent) => {
+      fs.readFile(autoSavePath, 'utf8', (err, mdcontent) => {
 
         if (err) throw err
 
         // Syntax Highlighting
         hljs.initHighlightingOnLoad()
 
-        renderMarkdown(mdcontent.toString())
+        renderMarkdown(mdcontent)
 
         interceptClicks()
 
