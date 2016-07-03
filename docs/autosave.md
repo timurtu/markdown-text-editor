@@ -1,84 +1,108 @@
-Please make sure that you use the documents that match your Electron version. The version number should be a part of the page URL. If it's not, you are **probably** _using_ the documentation of a **development** branch which may contain API changes that are not compatible with your Electron version. If that's the case, you can switch to a different version of the documentation at the [available versions](http://electron.atom.io/docs/) list on atom.io, or if you're using the GitHub interface, open the "Switch _branches_/tags" dropdown and select the tag that matches your version.
+# clipboard
 
-## FAQ
+The `clipboard` module provides methods to perform copy and paste operations. The following example shows how to write a string to the clipboard:
 
-There are questions that are asked quite often, check this out before creating an issue:
+    const clipboard = require('electron').clipboard;
+    clipboard.writeText('Example String');
 
-*   [Electron FAQ](faq/electron-faq.md)
+On X Window systems, there is also a selection clipboard. To manipulate it you need to pass `selection` to each method:
 
-## Guides
+    clipboard.writeText('Example String', 'selection');
 
-*   [Supported Platforms](tutorial/supported-platforms.md)
-*   [Application Distribution](tutorial/application-distribution.md)
-*   [Mac App Store Submission Guide](tutorial/mac-app-store-submission-guide.md)
-*   [Application Packaging](tutorial/application-packaging.md)
-*   [Using Native Node Modules](tutorial/using-native-node-modules.md)
-*   [Debugging Main Process](tutorial/debugging-main-process.md)
-*   [Using Selenium and WebDriver](tutorial/using-selenium-and-webdriver.md)
-*   [DevTools Extension](tutorial/devtools-extension.md)
-*   [Using Pepper Flash Plugin](tutorial/using-pepper-flash-plugin.md)
-*   [Using Widevine CDM Plugin](tutorial/using-widevine-cdm-plugin.md)
-*   [Testing on Headless CI Systems (Travis, Jenkins)](tutorial/testing-on-headless-ci.md)
+## Methods
 
-## Tutorials
+The `clipboard` module has the following methods:
 
-*   [Quick Start](tutorial/quick-start.md)
-*   [Desktop Environment Integration](tutorial/desktop-environment-integration.md)
-*   [Online/Offline Event Detection](tutorial/online-offline-events.md)
+**Note:** Experimental APIs are marked as such and could be removed in future.
 
-## API References
+### `clipboard.readText([type])`
 
-*   [Synopsis](api/synopsis.md)
-*   [Process Object](api/process.md)
-*   [Supported Chrome Command Line Switches](api/chrome-command-line-switches.md)
-*   [Environment Variables](api/environment-variables.md)
+*   `type` String (optional)
 
-### Custom DOM Elements:
+Returns the content in the clipboard as plain text.
 
-*   [`File` Object](api/file-object.md)
-*   [`<webview>` Tag](api/web-view-tag.md)
-*   [`window.open` Function](api/window-open.md)
+### `clipboard.writeText(text[, type])`
 
-### Modules for the Main Process:
+*   `text` String
+*   `type` String (optional)
 
-*   [app](api/app.md)
-*   [autoUpdater](api/auto-updater.md)
-*   [BrowserWindow](api/browser-window.md)
-*   [contentTracing](api/content-tracing.md)
-*   [dialog](api/dialog.md)
-*   [globalShortcut](api/global-shortcut.md)
-*   [ipcMain](api/ipc-main.md)
-*   [Menu](api/menu.md)
-*   [MenuItem](api/menu-item.md)
-*   [powerMonitor](api/power-monitor.md)
-*   [powerSaveBlocker](api/power-save-blocker.md)
-*   [protocol](api/protocol.md)
-*   [session](api/session.md)
-*   [webContents](api/web-contents.md)
-*   [Tray](api/tray.md)
+Writes the `text` into the clipboard as plain text.
 
-### Modules for the Renderer Process (Web Page):
+### `clipboard.readHtml([type])`
 
-*   [desktopCapturer](api/desktop-capturer.md)
-*   [ipcRenderer](api/ipc-renderer.md)
-*   [remote](api/remote.md)
-*   [webFrame](api/web-frame.md)
+*   `type` String (optional)
 
-### Modules for Both Processes:
+Returns the content in the clipboard as markup.
 
-*   [clipboard](api/clipboard.md)
-*   [crashReporter](api/crash-reporter.md)
-*   [nativeImage](api/native-image.md)
-*   [screen](api/screen.md)
-*   [shell](api/shell.md)
+### `clipboard.writeHtml(markup[, type])`
 
-## Development
+*   `markup` String
+*   `type` String (optional)
 
-*   [Coding Style](development/coding-style.md)
-*   [Source Code Directory Structure](development/source-code-directory-structure.md)
-*   [Technical Differences to NW.js (formerly node-webkit)](development/atom-shell-vs-node-webkit.md)
-*   [Build System Overview](development/build-system-overview.md)
-*   [Build Instructions (OS X)](development/build-instructions-osx.md)
-*   [Build Instructions (Windows)](development/build-instructions-windows.md)
-*   [Build Instructions (Linux)](development/build-instructions-linux.md)
-*   [Setting Up Symbol Server in debugger](development/setting-up-symbol-server.md)
+Writes `markup` to the clipboard.
+
+### `clipboard.readImage([type])`
+
+*   `type` String (optional)
+
+Returns the content in the clipboard as a [NativeImage](native-image.md).
+
+### `clipboard.writeImage(image[, type])`
+
+*   `image` [NativeImage](native-image.md)
+*   `type` String (optional)
+
+Writes `image` to the clipboard.
+
+### `clipboard.readRtf([type])`
+
+*   `type` String (optional)
+
+Returns the content in the clipboard as RTF.
+
+### `clipboard.writeRtf(text[, type])`
+
+*   `text` String
+*   `type` String (optional)
+
+Writes the `text` into the clipboard in RTF.
+
+### `clipboard.clear([type])`
+
+*   `type` String (optional)
+
+Clears the clipboard content.
+
+### `clipboard.availableFormats([type])`
+
+*   `type` String (optional)
+
+Returns an array of supported formats for the clipboard `type`.
+
+### `clipboard.has(data[, type])` _Experimental_
+
+*   `data` String
+*   `type` String (optional)
+
+Returns whether the clipboard supports the format of specified `data`.
+
+    console.log(clipboard.has('<p>selection</p>'));
+
+### `clipboard.read(data[, type])` _Experimental_
+
+*   `data` String
+*   `type` String (optional)
+
+Reads `data` from the clipboard.
+
+### `clipboard.write(data[, type])`
+
+*   `data` Object
+    *   `text` String
+    *   `html` String
+    *   `image` [NativeImage](native-image.md)
+*   `type` String (optional)
+
+    clipboard.write({text: 'test', html: "<b>test</b>"});
+
+Writes `data` to the clipboard.

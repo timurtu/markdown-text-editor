@@ -48,7 +48,7 @@ let buttons = [{
       if (currentFontSize < maxFontSize) {
         changeFontSize(currentFontSize += 2)
       }
-    },
+    }
   }, {
     label: '<i class="fa fa-copy"></i>',
     click: event => {
