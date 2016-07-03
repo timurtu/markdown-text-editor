@@ -7,6 +7,7 @@ const exec = require('child_process').exec
 
 const gulp = require('gulp')
 const babel = require('gulp-babel')
+const sass = require('gulp-sass')
 const del = require('del')
 const gutil = require('gulp-util')
 
@@ -15,7 +16,8 @@ const paths = {
   in: {
     all: path.resolve('src/**/*'),
     js: path.resolve('src/**/*.js'),
-    html: path.resolve('src/**/*.html')
+    html: path.resolve('src/**/*.html'),
+    sass: path.resolve('src/**/*.scss')
   },
   out: {
     all: 'dist',
@@ -33,7 +35,7 @@ gulp.task('electron', ['build'], () => {
   return new Promise((resolve, reject) => {
     exec(`${paths.electron} ${paths.out.main}`, (err, stdout, stderr) => {
 
-      if (err){
+      if (err) {
         throw err
       }
 
@@ -46,7 +48,7 @@ gulp.task('electron', ['build'], () => {
 })
 
 
-gulp.task('build', ['transpile', 'copy'])
+gulp.task('build', ['transpile', 'sass', 'copy'])
 
 gulp.task('transpile', () => {
 
@@ -56,10 +58,11 @@ gulp.task('transpile', () => {
 
 })
 
-gulp.task('sass', function () {
-  return gulp.src('./sass/**/*.scss')
+gulp.task('sass', () => {
+
+  return gulp.src(paths.in.sass)
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./css'))
+    .pipe(gulp.dest(paths.out.all))
 })
 
 gulp.task('copy', () => {
