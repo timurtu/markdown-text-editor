@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Write markdown with a WYSIWYG and get the source.",
   "main": "main.js",
-  "scripts": {
-    "start": "gulp"
-  },
   "build": {
     "app-bundle-id": "markup",
     "app-category-type": "markdown.text.editor",
