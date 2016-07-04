@@ -116,9 +116,9 @@ function handleLink(element) {
     })
 
   }
-  else if (href.startsWith('http')) {
+  // else if (href.startsWith('http')) {
 
-  }
+  // }
 }
 
 /**

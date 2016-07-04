@@ -9,5 +9,6 @@
 - `git clone https://github.com/timurtu/markup.git --depth 1`
 - `cd markup`
 - `npm install` to install dependencies
-- `npm start` to start the app
+- `npm install -g gulp-cli` to install the gulp cli globally
+- `gulp` to start the app
 
