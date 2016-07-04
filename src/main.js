@@ -1,4 +1,6 @@
-import {app, BrowserWindow, nativeImage} from 'electron'
+import { app, BrowserWindow, nativeImage } from 'electron'
+
+import './main/markdown'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -9,18 +11,15 @@ function createWindow() {
 
   const native = nativeImage.createFromPath('res/markup-icon.png')
 
-
   // Create the browser window.
-  editor = new BrowserWindow(
-    {
-      width: 500,
-      height: 475,
-      icon: native
-    })
+  editor = new BrowserWindow({
+    width: 500,
+    height: 475,
+    icon: native
+  })
 
   // and load the editor.html of the app.
   editor.loadURL('file://' + __dirname + '/index.html')
-
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

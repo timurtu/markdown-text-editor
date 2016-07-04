@@ -3,8 +3,7 @@
  */
 
 import toolbarjs from 'toolbarjs'
-import {saveMarkdown, copyAllMarkdown, editor, notify} from './editor'
-
+import { saveMarkdown, copyAllMarkdown, editor, notify } from './editor'
 
 const commandButtons = []
 let commands = ['bold', 'italic', 'underline']
@@ -36,7 +35,8 @@ let buttons = [
   }, {
     label: '<i class="fa fa-link"></i>',
     click: () => {
-      notify('Create a popup window to enter a link for the selected text. ') // TODO
+      notify(
+          'Create a popup window to enter a link for the selected text. ') // TODO
     }
   }, {
     label: '<i class="fa fa-minus"></i>',
