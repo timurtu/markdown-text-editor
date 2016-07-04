@@ -9,6 +9,7 @@ function createWindow() {
 
   const native = nativeImage.createFromPath('res/markup-icon.png')
 
+
   // Create the browser window.
   editor = new BrowserWindow(
     {

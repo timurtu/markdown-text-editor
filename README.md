@@ -9,5 +9,5 @@
 - `git clone https://github.com/timurtu/markup.git --depth 1`
 - `cd markup`
 - `npm install` to install dependencies
-- `npm start` to start the app
+- `gulp` to start the app
 

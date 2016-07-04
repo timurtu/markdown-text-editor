@@ -1,4 +1,4 @@
-import { clipboard } from 'electron'
+import {clipboard} from 'electron'
 
 import fs from 'fs'
 import path from 'path'
@@ -12,7 +12,7 @@ const autoSavePath = './docs/autosave.md'
 const docsPath = './docs/'
 
 // Editable DOM node for markdown content
-const editor = document.getElementById('markdown-text')
+export const editor = document.getElementById('markdown-text')
 let elements = []
 
 /**
@@ -23,20 +23,18 @@ let md = new Remarkable({
   highlight: (str, lang) => {
 
     if (lang && hljs.getLanguage(lang)) {
-
       try {
         return hljs.highlight(lang, str)
           .value
       } catch (err) {
-        console.log(`highlight.js error - ${err}`)
+        notify(`highlight.js error - ${err}`)
       }
     }
-
     try {
       return hljs.highlightAuto(str)
         .value
     } catch (err) {
-      console.log(`highlight.js error - ${err}`)
+      notify(`highlight.js error - ${err}`)
     }
 
     return '' // use external default escaping
@@ -83,18 +81,15 @@ function interceptClicks() {
 
     event.preventDefault()
 
-    const element = event.target;
+    const element = event.target
 
     /**
      * Handle link behavior
      */
     if (element.href) {
 
-      handleLink(element);
-    } else {
-
+      handleLink(element)
     }
-
   }
 
 }
@@ -119,9 +114,10 @@ function handleLink(element) {
       editor.innerHTML = md.render(data.toString())
     })
 
-  } else if (href.startsWith('http')) {
-
   }
+  // else if (href.startsWith('http')) {
+
+  // }
 }
 
 /**
@@ -134,7 +130,7 @@ function renderMarkdown(markdown) {
   editor.innerHTML += md.render(markdown)
 }
 
-function copyAllMarkdown() {
+export function copyAllMarkdown() {
 
   clipboard.writeText(toMarkdown(editor.innerHTML))
 
@@ -146,7 +142,7 @@ function copyAllMarkdown() {
  *
  * @returns {Promise} Empty promise that resolves when done saving.
  */
-function saveMarkdown() {
+export function saveMarkdown() {
 
   return new Promise((resolve, reject) => {
 
@@ -158,9 +154,7 @@ function saveMarkdown() {
 
         if (err) reject(err)
 
-        notify(
-          `Saved Markdown to ${path.join(__dirname, autoSavePath)}!`
-        )
+        notify(`Saved Markdown to ${path.join(__dirname, autoSavePath)}!`)
 
         resolve()
       })
@@ -194,7 +188,7 @@ function getEditorContents() {
  *
  * @param message String that will be notified.
  */
-function notify(message) {
+export function notify(message) {
 
   const notification = new Notification('Markup', {
 
