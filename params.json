@@ -1,7 +1,7 @@
 {
   "name": "Markup",
   "tagline": "Desktop app for writing markdown.",
-  "body": "# Markdown Editor for Everyone\r\n\r\n ![alt text][screenshot]\r\n\r\n [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot3.png \"Markup Screenshot\"\r\n\r\n## Install\r\n\r\n### You must have [Pandoc](http://pandoc.org/ \"Pandoc's website\") installed.\r\n\r\nDownload the application for your respective operating system.\r\n\r\n### OS X\r\n\r\n### Windows\r\n\r\n### Linux\r\n\r\n## Contribute\r\n\r\n- Fork this repo\r\n- `cd` into it\r\n- `npm install && npm start`\r\n- Send a pull request\r\n",
+  "body": "# The Markdown Editor for Everyone\r\n\r\n ![alt text][screenshot]\r\n\r\n [screenshot]: https://raw.githubusercontent.com/timurtu/markup/master/res/screenshot3.png \"Markup Screenshot\"\r\n\r\n## Build From Source\r\n\r\n- `git clone https://github.com/timurtu/markup.git --depth 1`\r\n- `cd markup`\r\n- `npm install` to install dependencies\r\n- `npm install -g gulp-cli` to install the gulp cli globally\r\n- `gulp` to start the app\r\n\r\n",
   "google": "UA-76171392-1",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
