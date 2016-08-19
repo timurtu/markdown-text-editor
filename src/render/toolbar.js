@@ -5,11 +5,13 @@
 import toolbarjs from 'toolbarjs'
 import { saveMarkdown, copyAllMarkdown, editor, notify } from './editor'
 
-const commandButtons = []
-let commands = ['bold', 'italic', 'underline']
+
 let currentFontSize = 16
 const maxFontSize = 40
 const minFontSize = 12
+
+const commandButtons = []
+let commands = ['bold', 'italic', 'underline']
 
 commands.forEach((command) => {
   commandButtons.push({
